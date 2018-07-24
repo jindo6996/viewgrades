@@ -1,9 +1,10 @@
 package controllers.auth
 
-import controllers.exceptions.{ EntityNotFoundException, FormErrorException }
+import controllers.exceptions.FormErrorException
 import controllers.forms.LoginForm.loginForm
 import controllers.forms.LoginInfo
 import dao.UserDAO
+import exceptions.EmailNotFoundException
 import javax.inject._
 import play.api.mvc._
 /**
@@ -28,10 +29,10 @@ class AuthController @Inject() (userDAO: UserDAO, cc: ControllerComponents) exte
       loginInfo <- validateForm(loginForm)
       userInfo <- userDAO.getByEmail(loginInfo.email)
     } yield {
-      Ok("login success").withSession("email" -> userInfo.get.email)
+      Ok("login success").withSession("email" -> userInfo.email)
     }).recover {
-      case formErr: FormErrorException[LoginInfo]      => BadRequest(views.html.login.loginIndex(loginForm))
-      case userErr: EntityNotFoundException[LoginInfo] => BadRequest(views.html.login.loginIndex(loginForm.fill(userErr.entity)))
+      case formErr: FormErrorException[LoginInfo] => BadRequest(views.html.login.loginIndex(formErr.formError))
+      case userErr: EmailNotFoundException        => BadRequest(views.html.login.loginIndex(loginForm.bindFromRequest().withGlobalError("User not found")))
     }.get
   }
 }

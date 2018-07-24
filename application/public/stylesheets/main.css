@@ -1,3 +1,6 @@
+.error{
+    color: red;
+}
 .monkey_scroll_wrapper.debug{background:rgba(0,0,0,.5)}
 .monkey_scroll_hider{overflow:hidden}
 .monkey_scroll_hider.debug{overflow:visible!important;background:green}

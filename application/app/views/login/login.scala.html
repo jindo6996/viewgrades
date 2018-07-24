@@ -13,6 +13,9 @@
                     <p class="browser_password align_left">Enter your <strong>email address</strong> and <strong>password</strong>.</p>
                     <p class="ssb_password hidden">What is your <strong>password</strong>?</p>
                         @CSRF.formField
+                    @if(loginForm.hasGlobalErrors){
+                        <span class="error">@loginForm.globalError.get.message</span>
+                    }
                     <p class=" no_bottom_margin">
                         @helper.inputText(loginForm("email"), '_id -> "email", 'name -> "email", 'type -> "email", 'size -> "40", 'placeholder -> "email address", '_showConstraints -> false,'_label -> "")
                     </p>

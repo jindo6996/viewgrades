@@ -7,7 +7,7 @@ import service.UserDomainService
 import scala.util.Try
 
 class UserRepository @Inject() (userDAO: UserDAO) {
-  def resolveByEmail(email: String): Try[Option[User]] = Try {
-    userDAO.getByEmail(email: String).map(_.map(UserDomainService.toEntity)).get
+  def resolveByEmail(email: String): Try[User] = Try {
+    userDAO.getByEmail(email: String).map(UserDomainService.toEntity).get
   }
 }
