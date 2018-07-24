@@ -1,0 +1,13 @@
+package dto
+
+import scalikejdbc._
+
+case class UserDTO(userId: String, email: String, password: String, entryCompanyDate: String,
+                   userRole: String, department: String, annualLeave: Long, userStatus: String)
+object UserDTO extends SQLSyntaxSupport[UserDTO] {
+  def apply(rs: WrappedResultSet) = new UserDTO(
+    rs.string("userId"), rs.string("email"), rs.string("password"),
+    rs.string("entryCompanyDate"), rs.string("userRole"), rs.string("department"),
+    rs.long("annualLeave"), rs.string("userStatus")
+  )
+}

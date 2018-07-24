@@ -1,5 +1,6 @@
-@(loginForm: Form[forms.LoginForm], style: String = "scala")(implicit request: Request[AnyContent], messages: Messages)
+@(loginForm: Form[forms.LoginInfo], style: String = "scala")(implicit request: Request[AnyContent], messages: Messages)
 @import helper._
+@import org.mindrot.jbcrypt.BCrypt
 @defining(play.core.PlayVersion.current) { version =>
 
     <div id="page_contents">
@@ -8,7 +9,7 @@
                 Sign in to <span class="break_word">Septeni Timesheet Managament</span>
             </h2>
             <div class="col span_4_of_6 float_none margin_auto signin_card">
-                @helper.form(action = routes.HomeController.index(), '_id -> "signin_form") {
+                @helper.form(action = auth.routes.AuthController.processLogin(), '_id -> "signin_form") {
                     <p class="browser_password align_left">Enter your <strong>email address</strong> and <strong>password</strong>.</p>
                     <p class="ssb_password hidden">What is your <strong>password</strong>?</p>
                         @CSRF.formField
@@ -18,7 +19,9 @@
                     <p class=" small_bottom_margin">
                         @helper.inputPassword(loginForm("password"), '_id -> "password", 'name -> "password", 'type -> "password", 'size -> "40", 'placeholder -> "password", '_showConstraints -> false,'_label -> "")
                     </p>
+                    <div class="actions">
                     <p><button id="signin_btn" type="submit" class="btn btn_large full_width ladda-button" data-style="expand-right"><span class="ladda-label">Sign in</span><span class="ladda-spinner"></span></button></p>
+                    </div>
                 }
             </div>
         </div>
