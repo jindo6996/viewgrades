@@ -7,6 +7,7 @@ import dao.UserDAO
 import exceptions.EmailNotFoundException
 import javax.inject._
 import play.api.mvc._
+import play.mvc.Security.AuthenticatedAction
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -37,7 +38,8 @@ class AuthController @Inject() (userDAO: UserDAO, cc: ControllerComponents) exte
       case e: NoSuchElementException              => BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found")))
     }.get
   }
-  def logout = Action {
+
+  def logout = withAuth { email => implicit request =>
     Redirect(routes.AuthController.loginView).withNewSession
   }
 }

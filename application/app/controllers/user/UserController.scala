@@ -7,7 +7,7 @@ import play.api.mvc.{ AbstractController, ControllerComponents }
 @Singleton
 class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents) extends AbstractController(cc)
   with play.api.i18n.I18nSupport with controllers.BaseController with Secured {
-  def listUser = Action { implicit request =>
+  def listUser = withAuth { email => implicit request =>
     Ok(views.html.users.userlist(""))
   }
 }
