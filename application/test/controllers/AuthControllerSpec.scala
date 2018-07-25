@@ -72,12 +72,21 @@ class AuthControllerSpec extends Specification with Mockito {
         mockUserDao.checkPassword("123456", user.password) returns true
         val result = controller.processLogin().apply(FakeRequest(POST, "/").
           withFormUrlEncodedBody("email" -> "test@gmail.com", "password" -> "123456").withCSRFToken)
-        status(result) must equalTo(OK)
+        status(result) must equalTo(303)
       }
       "System error" >> {
         mockUserDao.getByEmail("test@gmail.com") returns Failure(new Exception("System error"))
         controller.processLogin.apply(FakeRequest(POST, "/").
           withFormUrlEncodedBody("email" -> "test@gmail.com", "password" -> "123455").withCSRFToken) must throwA[Exception]
+      }
+    }
+    "logout" >> {
+      "go to login page" >> {
+        val result = controller.loginView.apply(FakeRequest(GET, "/logout").withCSRFToken)
+        status(result) must equalTo(OK)
+        contentAsString(result) must contain("Sign in")
+        contentAsString(result) must contain("email address")
+        contentAsString(result) must contain("password")
       }
     }
   }
