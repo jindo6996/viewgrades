@@ -28,11 +28,13 @@ class AuthController @Inject() (userDAO: UserDAO, cc: ControllerComponents) exte
     (for {
       loginInfo <- validateForm(loginForm)
       userInfo <- userDAO.getByEmail(loginInfo.email)
+      if (userDAO.checkPassword(loginInfo.password, userInfo.password))
     } yield {
       Ok("login success").withSession("email" -> userInfo.email)
     }).recover {
       case formErr: FormErrorException[LoginInfo] => BadRequest(views.html.login.loginIndex(formErr.formError))
       case userErr: EmailNotFoundException        => BadRequest(views.html.login.loginIndex(loginForm.bindFromRequest().withGlobalError("User not found")))
+      case e: NoSuchElementException              => BadRequest(views.html.login.loginIndex(loginForm.bindFromRequest().withGlobalError("User not found")))
     }.get
   }
 }
