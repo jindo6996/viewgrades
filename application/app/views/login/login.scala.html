@@ -2,7 +2,16 @@
 @import helper._
 @import org.mindrot.jbcrypt.BCrypt
 @defining(play.core.PlayVersion.current) { version =>
-
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            @* Here's where we render the page title `String`. *@
+            <title>Septeni Timesheet Managament</title>
+            <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+            <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+            <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+        </head>
+        <body>
     <div id="page_contents">
         <div class="real_content card align_center span_4_of_6 col float_none margin_auto large_bottom_margin right_padding large_bottom_padding">
             <h2 id="signin_header" class="tiny_bottom_margin">
@@ -29,5 +38,6 @@
             </div>
         </div>
     </div>
-
+        </body>
+    </html>
 }
