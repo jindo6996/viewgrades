@@ -62,3 +62,4 @@ scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignSingleLineCaseStatements, true)
   .setPreference(DoubleIndentConstructorArguments, true)
   .setPreference(DanglingCloseParenthesis, Preserve)
+libraryDependencies += "com.typesafe.play" %% "cachecontrol" % "1.1.1"
