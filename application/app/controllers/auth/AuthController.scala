@@ -21,8 +21,9 @@ class AuthController @Inject() (userDAO: UserDAO, cc: ControllerComponents) exte
    * a path of `/`.
    */
   def loginView = Action { implicit request =>
-    //Ok(views.html.users.userlist(""))
-    Ok(views.html.login.login(loginForm))
+    if (request.session.get("email").isEmpty) {
+      Ok(views.html.login.login(loginForm))
+    } else Ok(views.html.users.userlist(""))
   }
 
   def processLogin = Action { implicit request =>
