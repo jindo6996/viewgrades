@@ -7,7 +7,6 @@ import dao.UserDAO
 import exceptions.EmailNotFoundException
 import javax.inject._
 import play.api.mvc._
-import play.mvc.Security.AuthenticatedAction
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -22,7 +21,9 @@ class AuthController @Inject() (userDAO: UserDAO, cc: ControllerComponents) exte
    * a path of `/`.
    */
   def loginView = Action { implicit request =>
-    Ok(views.html.login.login(loginForm))
+    if (request.session.get("email").isEmpty) {
+      Ok(views.html.login.login(loginForm))
+    } else Ok(views.html.users.userlist(""))
   }
 
   def processLogin = Action { implicit request =>
