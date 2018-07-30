@@ -8,6 +8,6 @@ object UserDTO extends SQLSyntaxSupport[UserDTO] {
   def apply(rs: WrappedResultSet) = new UserDTO(
     rs.string("userId"), rs.string("email"), rs.string("password"),
     rs.string("entryCompanyDate"), rs.string("userRole"), rs.string("department"),
-    rs.long("annualLeave"), rs.string("userStatus")
+    rs.float("annualLeave"), rs.string("userStatus")
   )
 }

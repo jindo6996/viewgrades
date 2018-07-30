@@ -1064,6 +1064,7 @@ pre code {
 .table td {
     padding: 0.75rem;
     vertical-align: top;
+    color: #003eff;
     border-top: 1px solid transparent; }
 .table thead th {
     vertical-align: bottom;

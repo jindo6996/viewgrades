@@ -22,9 +22,10 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
    * a path of `/`.
    */
   def loginView = Action { implicit request =>
-    if (request.session.get("email").isEmpty) {
-      Ok(views.html.login.login(loginForm))
-    } else Ok(views.html.users.userlist(""))
+    //    if (request.session.get("email").isEmpty) {
+    //      Ok(views.html.login.login(loginForm))
+    //    } else Ok(views.html.users.userlist(""))
+    Ok(views.html.users.userlist(""))
   }
 
   def processLogin = Action { implicit request =>
@@ -33,7 +34,7 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
       userInfo <- userRepository.resolveByEmail(loginInfo.email)
       if (userRepository.checkPassword(loginInfo.password, userInfo.password))
     } yield {
-      Redirect("/users").withSession("email" -> userInfo.email).withHeaders(CACHE_CONTROL -> "no-cache, no-store, must-revalidate")
+      Redirect("/users").withSession("email" -> userInfo.email)
     }).recover {
       case formErr: FormErrorException[LoginInfo] => BadRequest(views.html.login.login(formErr.formError))
       case userErr: EmailNotFoundException        => BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found")))

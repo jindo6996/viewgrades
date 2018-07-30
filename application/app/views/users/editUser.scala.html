@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>$Title$</title>
-    </head>
-    <body>
-$END$
-    </body>
-</html>
+@(message: String)(implicit request: Request[_])
+@main("Septeni Timesheet Managament") {
+    <div class="row">
+        <div class="col-md-12" >
+            <div class="col-md-10" >
+                <label> <h1 class="text-primary"> Edit Account Information </h1> </label>
+            </div>
+            <form class="">
+
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label>Staff code: </label>
+                        <input type="text" class="form-control" placeholder="Enter code">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Email address: </label>
+                        <input type="email" class="form-control" placeholder="Enter email">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Entry Company Date: </label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-2 m-2" >
+                        <label>Role: </label><br>
+                        <input type="radio" value="ADMIN" name="role"> Admin
+                        <input type="radio" value="STAFF" name="role"> Staff
+                    </div>
+                    <div class="col-md-3 m-2" >
+                        <label>Department: </label><br>
+                        <select name="department" class="btn dropdown-toggle btn-light">
+                            <option value="Back Office">Back Office</option>
+                            <option value="Sacdev">Sacdev</option>
+                            <option value="Mocua">Mocua</option>
+                            <option value="Procog">Procog</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 m-2" >
+                        <label>Annual leave: </label>
+                        <input type="text" class="form-control" value="12">
+                    </div>
+                    <div class="col-md-2 m-2" >
+                        <label>Status: </label><br>
+                        <input type="radio" value="ACTIVE" name="status"> Active
+                        <input type="radio" value="INACTIVE" name="status"> Inactive
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-10" >
+                <button type="submit" class="btn btn-primary">Edit</button>
+                    <button class="btn btn-primary">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+}
