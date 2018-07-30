@@ -10,4 +10,7 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents) exte
   def listUser = withAuth { email => implicit request =>
     Ok(views.html.users.userlist(""))
   }
+  def addUser = withAuth { email => implicit request =>
+    Ok(views.html.users.userlist("add user"))
+  }
 }
