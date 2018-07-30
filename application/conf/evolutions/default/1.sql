@@ -1,5 +1,4 @@
 #up
-USE tsm;
 CREATE TABLE users(
   userId VARCHAR(20) PRIMARY KEY NOT NULL,
   email VARCHAR(100)  NOT NULL UNIQUE,

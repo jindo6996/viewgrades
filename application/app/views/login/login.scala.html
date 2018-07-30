@@ -1,19 +1,18 @@
-@(loginForm: Form[forms.LoginInfo], style: String = "scala")(implicit request: Request[AnyContent], messages: Messages)
+@(loginForm: Form[forms.LoginInfo], style: String = "scala")(implicit request: Request[AnyContent], messages: Messages, flash: Flash)
 @import helper._
 @import org.mindrot.jbcrypt.BCrypt
-@defining(play.core.PlayVersion.current) { version =>
 <!DOCTYPE html>
     <html lang="en">
         <head>
-            @* Here's where we render the page title `String`. *@
             <title>Septeni Timesheet Managament</title>
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
             <script src="@routes.Assets.versioned("javascripts/jquery.min.js")" type="text/javascript"></script>
             <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
 
+
         </head>
-        <body>
+        <body >
     <div id="page_contents">
         <div class="real_content card align_center span_4_of_6 col float_none margin_auto large_bottom_margin right_padding large_bottom_padding">
             <h2 id="signin_header" class="tiny_bottom_margin">
@@ -24,14 +23,24 @@
                     <p class="browser_password align_left">Enter your <strong>email address</strong> and <strong>password</strong>.</p>
                     <p class="ssb_password hidden">What is your <strong>password</strong>?</p>
                         @CSRF.formField
-                    @if(loginForm.hasGlobalErrors){
-                        <span class="error">@loginForm.globalError.get.message</span>
-                    }
+                    <span class="error">@{flash.get("error")}</span>
                     <p class=" no_bottom_margin">
-                        @helper.inputText(loginForm("email"), '_id -> "email", 'name -> "email", 'type -> "email", 'size -> "40", 'placeholder -> "email address", '_showConstraints -> false,'_label -> "")
+                        @if(flash.get("email").isEmpty) {
+                            @helper.inputText(loginForm("email"), '_id -> "email", 'name -> "email", 'type -> "email", 'size -> "40", 'placeholder -> "email address", '_showConstraints -> false, '_label -> "")
+                        }
+                        @if(flash.get("email").isDefined && flash.get("email").get.isEmpty){
+                                @helper.inputText(loginForm("email"), '_id -> "email",'class->"test", 'name -> "email", 'type -> "email", 'size -> "40", 'placeholder -> "email address", '_showConstraints -> false, '_label -> "")
+                                <dd class="error">Valid email required</dd>
+                        }
+                        @if(flash.get("email").isDefined && !flash.get("email").get.isEmpty){
+                            @helper.inputText(loginForm("email").copy(value = Some(flash.get("email").get)), '_id -> "email", 'name -> "email", 'type -> "email", 'size -> "40", 'placeholder -> "email address",'_showConstraints -> false,  '_label -> "")
+                        }
                     </p>
                     <p class=" small_bottom_margin">
                         @helper.inputPassword(loginForm("password"), '_id -> "password", 'name -> "password", 'type -> "password", 'size -> "40", 'placeholder -> "password", '_showConstraints -> false,'_label -> "")
+                        @if(flash.get("password").isDefined && flash.get("password").get.isEmpty ) {
+                            <dd class="error">This field is required</dd>
+                        }
                     </p>
                     <div class="actions">
                     <p><button id="signin_btn" type="submit" class="btn btn_large full_width ladda-button" data-style="expand-right"><span class="ladda-label">Sign in</span><span class="ladda-spinner"></span></button></p>
@@ -42,4 +51,3 @@
     </div>
         </body>
     </html>
-}

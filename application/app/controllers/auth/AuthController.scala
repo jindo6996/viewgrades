@@ -3,7 +3,6 @@ package controllers.auth
 import controllers.exceptions.FormErrorException
 import controllers.forms.LoginForm.loginForm
 import controllers.forms.LoginInfo
-import dao.UserDAO
 import exceptions.EmailNotFoundException
 import javax.inject._
 import model.UserRepository
@@ -22,10 +21,10 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
    * a path of `/`.
    */
   def loginView = Action { implicit request =>
-    //    if (request.session.get("email").isEmpty) {
-    //      Ok(views.html.login.login(loginForm))
-    //    } else Ok(views.html.users.userlist(""))
-    Ok(views.html.users.userlist(""))
+    if (request.session.get("email").isEmpty) {
+      //      if (request.flash.get("error").isDefined) print(request.flash.get("error").get)
+      Ok(views.html.login.login(loginForm))
+    } else Redirect("/users")
   }
 
   def processLogin = Action { implicit request =>
@@ -36,13 +35,13 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
     } yield {
       Redirect("/users").withSession("email" -> userInfo.email)
     }).recover {
-      case formErr: FormErrorException[LoginInfo] => BadRequest(views.html.login.login(formErr.formError))
-      case userErr: EmailNotFoundException        => BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found")))
-      case e: NoSuchElementException              => BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found")))
+      case formErr: FormErrorException[LoginInfo] => Redirect("/").flashing(Flash(formErr.formError.data)) // BadRequest(views.html.login.login(formErr.formError))
+      case userErr: EmailNotFoundException        => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("cache-control" -> "no-cache")
+      case e: NoSuchElementException              => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("Cache-Control" -> "no-cache")
     }.get
   }
 
   def logout = withAuth { email => implicit request =>
-    Redirect(routes.AuthController.loginView).withNewSession.withHeaders(CACHE_CONTROL -> "no-cache, no-store, must-revalidate")
+    Redirect(routes.AuthController.loginView).withNewSession
   }
 }
