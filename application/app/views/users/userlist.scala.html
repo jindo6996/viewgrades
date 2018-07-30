@@ -1,109 +1,55 @@
 
-@(message: String)(implicit request: Request[_], flash: Flash)
+@(users: List[model.User])(implicit request: Request[_], flash: Flash)
 @main("Septeni Timesheet Managament") {
     <div class="row">
-        <div class="col-md-2">
-            <a href="/users/add" class="btn btn-outline-secondary" >Create account</a>
+        <div class="col-md-4">
+            <h2>Account Mangament</h2>
         </div>
         <div class="col-md-3"></div>
-        <div class="col-md-4" ></div>
-        <div class="col-md-3">
-            <input class="form-control" type="search" placeholder="Search" style="background-color:transparent; color: #ffffff">
+        <div class="col-md-2">
+            <a href="/users/add" class="btn btn-outline-secondary m-2">Create account</a>
         </div>
+        <div class="col-md-3">
+            <input class="form-control m-2" type="search" placeholder="Search"> </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Staff code</th>
                         <th>Email</th>
                         <th>Department</th>
                         <th>Annual Leave</th>
+                        <th>Entry Company Date</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last modified</th>
                         <th></th>
-
-
                     </tr>
                 </thead>
                 <tbody>
-
+                @for(user <- users) {
                     <tr>
-                        <td>1</td>
-                        <td>dai_nt@@septeni-technology.jp</td>
-                        <td>Procog</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
+                        <td>@user.userId</td>
+                        <td>@user.email</td>
+                        <td>@user.department</td>
+                        <td>@user.annualLeave</td>
+                        <td>@user.entryCompanyDate</td>
+                        <td>@user.userRole</td>
+                        <td>@user.userStatus</td>
+                        <td>hahahaha</td>
+                        <th>
+                            <a href="/users/edit">Edit</a>
+                        </th>
                     </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>nhat_nv@@septeni-technology.jp</td>
-                        <td>Mocua</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>tu_nv@@septeni-technology.jp</td>
-                        <td>Sacdev</td>
-                        <td>12</td>
-                        <th><a href="#">Edit</a></th>
-                    </tr>
+                }
                 </tbody>
             </table>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
             <ul class="pagination">
                 <li class="page-item">
                     <a class="btn btn-outline-secondary" href="#">
@@ -129,7 +75,18 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </li>
+                <li class="page-item">
+                    <select name="department" class="btn dropdown-toggle btn-light">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select>
+                </li>
             </ul>
         </div>
+        <div class="col-md-2"> </div>
     </div>
+
 }

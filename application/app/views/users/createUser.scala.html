@@ -1,4 +1,4 @@
-@(message: String)(implicit request: Request[_])
+@(message: String)(implicit request: Request[_], flash: Flash)
 @main("Septeni Timesheet Managament") {
     <div class="row">
         <div class="col-md-12" >
@@ -53,7 +53,7 @@
 
                 <div class="col-md-10" >
                 <button type="submit" class="btn btn-primary">Create</button>
-                    <button class="btn btn-primary">Cancel</button>
+                    <a class="btn btn-primary" href="/">Cancel</a>
                 </div>
             </form>
 

@@ -3,7 +3,7 @@ package controllers.auth
 import controllers.exceptions.FormErrorException
 import controllers.forms.LoginForm.loginForm
 import controllers.forms.LoginInfo
-import exceptions.EmailNotFoundException
+import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject._
 import model.UserRepository
 import play.api.mvc._
@@ -37,6 +37,7 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
     }).recover {
       case formErr: FormErrorException[LoginInfo] => Redirect("/").flashing(Flash(formErr.formError.data)) // BadRequest(views.html.login.login(formErr.formError))
       case userErr: EmailNotFoundException        => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("cache-control" -> "no-cache")
+      case userErr: IdNotFoundException           => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("cache-control" -> "no-cache")
       case e: NoSuchElementException              => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("Cache-Control" -> "no-cache")
     }.get
   }

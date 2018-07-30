@@ -12,6 +12,10 @@ class UserRepository @Inject() (userDAO: UserDAO) {
     userDAO.getByEmail(email: String).map(UserDomainService.toEntity).get
   }
 
+  def resolveAll: Try[List[User]] = Try {
+    userDAO.getAll.map(_.map(UserDomainService.toEntity)).get
+  }
+
   def checkPassword(password: String, passwordHash: String): Boolean =
     BCrypt.checkpw(password, passwordHash)
 }

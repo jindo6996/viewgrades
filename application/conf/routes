@@ -20,3 +20,7 @@ GET     /users/add                 controllers.user.UserController.addUser
 GET     /users                  controllers.user.UserController.listUser
 
 GET     /logout                 controllers.auth.AuthController.logout
+
+GET     /createAccount                 controllers.auth.AuthController.logout
+
+GET     /users/edit                 controllers.user.UserController.editUser
