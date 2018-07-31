@@ -1,35 +1,41 @@
 @(message: String)(implicit request: Request[_], flash: Flash)
 @main("Septeni Timesheet Managament") {
     <div class="row">
-        <div class="col-md-12" >
-            <div class="col-md-10" >
-                <label> <h1 class="text-primary"> Create Account </h1> </label>
-            </div>
+        <div class="col-md-3"><a href="http://www.google.com"
+        target="popup"
+        onclick="window.open('http://www.google.com','popup','width=600,height=600'); return false;">
+            Link Text goes here...
+        </a></div>
+        <div class="col-md-6 border">
+            <h2> Create Account</h2>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 border">
             <form class="">
-
                 <div class="form-row">
-                    <div class="col-md-3">
+                    <div class="col-md-2 my-3">
                         <label>Staff code: </label>
-                        <input type="text" class="form-control" placeholder="Enter code">
-                    </div>
-                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Code" > </div>
+                    <div class="col-md-6 my-3">
                         <label>Email address: </label>
-                        <input type="email" class="form-control" placeholder="Enter email">
-                    </div>
-                    <div class="col-md-3">
+                        <input type="email" class="form-control" placeholder="Email"> </div>
+                    <div class="col-md-4 my-3">
                         <label>Entry Company Date: </label>
-                        <input type="date" class="form-control">
-                    </div>
+                        <input type="date" class="form-control"> </div>
                 </div>
-
                 <div class="form-row">
-                    <div class="col-md-2 m-2" >
-                        <label>Role: </label><br>
+                    <div class="col-md-2 my-3">
+                        <label>Role: </label>
+                        <br>
                         <input type="radio" value="ADMIN" name="role"> Admin
-                        <input type="radio" value="STAFF" name="role"> Staff
-                    </div>
-                    <div class="col-md-3 m-2" >
-                        <label>Department: </label><br>
+                        <br>
+                        <input type="radio" value="STAFF" name="role" checked> Staff </div>
+                    <div class="col-md-3 my-3">
+                        <label>Department: </label>
+                        <br>
                         <select name="department" class="btn dropdown-toggle btn-light">
                             <option value="Back Office">Back Office</option>
                             <option value="Sacdev">Sacdev</option>
@@ -38,25 +44,16 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="col-md-2 m-2" >
+                    <div class="col-md-3 my-3">
                         <label>Annual leave: </label>
-                        <input type="text" class="form-control" value="12">
-                    </div>
-                    <div class="col-md-2 m-2" >
-                        <label>Status: </label><br>
-                        <input type="radio" value="ACTIVE" name="status"> Active
-                        <input type="radio" value="INACTIVE" name="status"> Inactive
-                    </div>
+                        <input type="text" class="form-control" value="12"> </div>
+
                 </div>
-
-
-
-                <div class="col-md-10" >
-                <button type="submit" class="btn btn-primary">Create</button>
-                    <a class="btn btn-primary" href="/">Cancel</a>
+                <div class="col-md-12 my-3">
+                    <button type="submit" class="btn bg-gradient2">Create</button>
+                    <a class="btn btn-info" href="/">Cancel</a>
                 </div>
             </form>
-
         </div>
     </div>
 }

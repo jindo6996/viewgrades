@@ -7,6 +7,7 @@ import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject._
 import model.UserRepository
 import play.api.mvc._
+import services.AccountService
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
@@ -31,14 +32,14 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
     (for {
       loginInfo <- validateForm(loginForm)
       userInfo <- userRepository.resolveByEmail(loginInfo.email)
-      if (userRepository.checkPassword(loginInfo.password, userInfo.password))
+      if (AccountService.checkPassword(loginInfo.password, userInfo.password))
     } yield {
       Redirect("/users").withSession("email" -> userInfo.email)
     }).recover {
-      case formErr: FormErrorException[LoginInfo] => Redirect("/").flashing(Flash(formErr.formError.data)) // BadRequest(views.html.login.login(formErr.formError))
-      case userErr: EmailNotFoundException        => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("cache-control" -> "no-cache")
-      case userErr: IdNotFoundException           => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("cache-control" -> "no-cache")
-      case e: NoSuchElementException              => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found")) //BadRequest(views.html.login.login(loginForm.bindFromRequest().withGlobalError("User not found"))).withHeaders("Cache-Control" -> "no-cache")
+      case formErr: FormErrorException[LoginInfo] => Redirect("/").flashing(Flash(formErr.formError.data))
+      case userErr: EmailNotFoundException        => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
+      case userErr: IdNotFoundException           => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
+      case e: NoSuchElementException              => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
     }.get
   }
 

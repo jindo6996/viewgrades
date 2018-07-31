@@ -2,46 +2,47 @@
 @(users: List[model.User])(implicit request: Request[_], flash: Flash)
 @main("Septeni Timesheet Managament") {
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 my-1">
             <h2>Account Mangament</h2>
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-2">
-            <a href="/users/add" class="btn btn-outline-secondary m-2">Create account</a>
+            <a href="/users/add" class="btn bg-gradient2 m-2">Create account</a>
         </div>
         <div class="col-md-3">
             <input class="form-control m-2" type="search" placeholder="Search"> </div>
     </div>
+    
     <div class="row">
         <div class="col-md-12">
-            <table class="table">
+            <table class="table table-bordered table-sort table-sort-search">
                 <thead>
                     <tr>
-                        <th>Staff code</th>
-                        <th>Email</th>
-                        <th>Department</th>
-                        <th>Annual Leave</th>
-                        <th>Entry Company Date</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Last modified</th>
+                        <th class="table-sort">Staff code</th>
+                        <th class="table-sort">Email</th>
+                        <th class="table-sort">Department</th>
+                        <th class="table-sort">Annual Leave</th>
+                        <th class="table-sort">Entry Company Date</th>
+                        <th class="table-sort">Role</th>
+                        <th class="table-sort">Status</th>
+                        <th class="table-sort">Last modified</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                 @for(user <- users) {
                     <tr>
-                        <td>@user.userId</td>
+                        <td>@user.userId.value</td>
                         <td>@user.email</td>
-                        <td>@user.department</td>
+                        <td>@user.department.name</td>
                         <td>@user.annualLeave</td>
-                        <td>@user.entryCompanyDate</td>
+                        <td>@user.entryCompanyDate.substring(0,10)</td>
                         <td>@user.userRole</td>
                         <td>@user.userStatus</td>
-                        <td>hahahaha</td>
-                        <th>
+                        <td>@user.lastModified</td>
+                        <td>
                             <a href="/users/edit">Edit</a>
-                        </th>
+                        </td>
                     </tr>
                 }
                 </tbody>
@@ -76,7 +77,7 @@
                     </a>
                 </li>
                 <li class="page-item">
-                    <select name="department" class="btn dropdown-toggle btn-light">
+                    <select name="department" class="btn dropdown-toggle btn-light mx-1">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -86,7 +87,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-2"> </div>
+
     </div>
 
 }
