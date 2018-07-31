@@ -6111,6 +6111,11 @@ html, body {
     color: #fff;
     background: linear-gradient(-30deg, #4f70ce 0%, #12bbad 50%, #12bbad 100%); }
 
+.bg-gradient2 {
+    overflow: hidden;
+    color: #fff;
+    background: linear-gradient(-30deg, #4f7fce 0%, #4f90fc 50%, #4fb0fc 100%); }
+
 .filter-dark {
     overflow: hidden;
     position: relative;
