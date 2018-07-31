@@ -13,6 +13,7 @@ import scala.util.{ Failure, Success }
 
 class AuthControllerSpec extends Specification with Mockito {
   val mockUserRepo: UserRepository = mock[UserRepository]
+  //  val check= mock(AccountService)
   val controller = new AuthController(mockUserRepo, stubControllerComponents())
   "AuthController" >> {
     "loginView" >> {
@@ -46,18 +47,18 @@ class AuthControllerSpec extends Specification with Mockito {
       }
 
       "user exists but password incorrect" >> {
-        val user = User(UserId("1"), "test@gmail.com", "123123", "2013/1/1", UserRole.Staff, Department("BO"), 12, UserStatus.Active)
+        val user = User(UserId("1"), "test@gmail.com", "$2a$10$y1yl0I7dOxfQj26OYBRIn.Lv0UXWRokm7mGKGtuXOvMHtBnZYywdO", "2013/1/1", UserRole.Staff, Department("BO"), 12, UserStatus.Active, "2018-07-30 14:49:35.0")
         mockUserRepo.resolveByEmail("test@gmail.com") returns Success(user)
-        mockUserRepo.checkPassword("123455", user.password) returns false
+        //        mockUserRepo.checkPassword("123455", user.password) returns false
         val result = controller.processLogin.apply(FakeRequest(POST, "/").
-          withFormUrlEncodedBody("email" -> "test@gmail.com", "password" -> "123455").withCSRFToken)
+          withFormUrlEncodedBody("email" -> "test@gmail.com", "password" -> "123456").withCSRFToken)
         status(result) must equalTo(303)
       }
 
       "user login successfully" >> {
-        val user = User(UserId("1"), "test@gmail.com", "123123", "2013/1/1", UserRole.Staff, Department("BO"), 12, UserStatus.Active)
+        val user = User(UserId("1"), "test@gmail.com", "$2a$10$y1yl0I7dOxfQj26OYBRIn.Lv0UXWRokm7mGKGtuXOvMHtBnZYywdO", "2013/1/1", UserRole.Staff, Department("BO"), 12, UserStatus.Active, "2018-07-30 14:49:35.0")
         mockUserRepo.resolveByEmail("test@gmail.com") returns Success(user)
-        mockUserRepo.checkPassword("123456", user.password) returns true
+        //        mockUserRepo.checkPassword("123456", user.password) returns true
         val result = controller.processLogin().apply(FakeRequest(POST, "/").
           withFormUrlEncodedBody("email" -> "test@gmail.com", "password" -> "123456").withCSRFToken)
         status(result) must equalTo(303)

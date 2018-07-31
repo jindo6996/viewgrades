@@ -2,8 +2,6 @@ package model
 
 import dao.UserDAO
 import javax.inject.Inject
-import javax.swing.text.html.parser.Entity
-import org.mindrot.jbcrypt.BCrypt
 import service.UserDomainService
 
 import scala.util.Try
