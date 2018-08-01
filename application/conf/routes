@@ -23,4 +23,4 @@ GET     /logout                 controllers.auth.AuthController.logout
 
 GET     /createAccount                 controllers.auth.AuthController.logout
 
-GET     /users/edit                 controllers.user.UserController.editUser
+POST     /users/edit                 controllers.user.UserController.editUser
