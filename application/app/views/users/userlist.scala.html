@@ -9,13 +9,13 @@
         <div class="col-md-2">
             <a href="/users/add" class="btn bg-gradient2 m-2">Create account</a>
         </div>
-        <div class="col-md-3">
-            <input class="form-control m-2" type="search" placeholder="Search"> </div>
+        <div class="col-md-3 table-sort-search-container">
+            <input class="form-control m-2" id="myInputTextField" type="search" placeholder="Search" aria-controls="example"> </div>
     </div>
     
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-bordered table-sort table-sort-search">
+            <table class="table table-bordered" id="example">
                 <thead>
                     <tr>
                         <th class="table-sort">Staff code</th>
@@ -89,5 +89,19 @@
         </div>
 
     </div>
+    <script type="text/javascript">
+            var table = $('#example').DataTable({
+                paging: true,
+                bFilter: true,
+                ordering: true,
+                searching: true,
+                dom: 't'         // This shows just the table
+            });
+            // #myInput is a <input type="text"> element
+            $('#myInputTextField').on( 'keyup', function () {
+                table.search( this.value ).draw();
+            } );
+
+    </script>
 
 }
