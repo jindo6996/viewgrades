@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-2">
-            <button onclick="document.getElementById('createuser').style.display='block'" class="btn bg-gradient2 m-2">Create account</button>
+            <button onclick="document.getElementById('create_user').style.display='block'" class="btn bg-gradient2 m-2">Create account</button>
         </div>
         <div class="col-md-3">
             <input class="form-control m-2" type="search" placeholder="Search"> </div>
@@ -90,16 +90,7 @@
 
     </div>
     @*Creat user form*@
-    <div class="modal" id="createuser">
-        @*<div class="row container">*@
-            @*<div class="col-md-3"></div>*@
-            @*<div class="col-md-6 border">*@
-                @*<h2> Create Account</h2>*@
-            @*</div>*@
-            @*<div class="col-md-3"></div>*@
-        @*</div>*@
-        <div class="row">
-            @*<div class="col-md-3"></div>*@
+    <div class="modal" id="create_user">
             <div class="col-md-6 border modal-content animate">
                 <h2 class=> Create Account</h2>
                 <form class="">
@@ -112,7 +103,7 @@
                             <input type="email" class="form-control" placeholder="Email"> </div>
                         <div class="col-md-4 my-3">
                             <label>Entry Company Date: </label>
-                            <input type="date" class="form-control"> </div>
+                            <input type="date" class="form-control disable-scroll"> </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-2 my-3">
@@ -124,7 +115,7 @@
                         <div class="col-md-3 my-3">
                             <label>Department: </label>
                             <br>
-                            <select name="department" class="btn dropdown-toggle btn-light">
+                            <select name="department" class="btn dropdown-toggle btn-light disable-scroll">
                                 <option value="Back Office">Back Office</option>
                                 <option value="Sacdev">Sacdev</option>
                                 <option value="Mocua">Mocua</option>
@@ -139,10 +130,9 @@
                     </div>
                     <div class="col-md-12 my-3">
                         <button type="submit" class="btn cancelbtn" style="background-color:green">Create</button>
-                        <button type="button" onclick="document.getElementById('createuser').style.display='none'" class="btn cancelbtn">Cancel</button>
+                        <button type="button" onclick="document.getElementById('create_user').style.display='none'" class="btn cancelbtn">Cancel</button>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
 }

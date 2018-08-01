@@ -1,9 +1,11 @@
 // Get the modal
-modal = document.getElementById('createuser');
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target === modal) {
+    var modal = document.getElementById('create_user');
+    var row = document.getElementsByClassName("row");
+    console.log(modal);
+    console.log(event.target);
+    if (event.target == modal) {
         modal.style.display = "none";
     }
 }
