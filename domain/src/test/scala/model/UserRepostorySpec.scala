@@ -1,11 +1,8 @@
 package model
 
 import dao.UserDAO
-import dto.UserDTO
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
-
-import scala.util.Success
 
 class UserRepostorySpec extends Specification with Mockito {
   val mockUserDAO: UserDAO = mock[UserDAO]
