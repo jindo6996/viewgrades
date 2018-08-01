@@ -2,6 +2,7 @@ package dao
 
 import dto.UserDTO
 import exceptions.{ EmailNotFoundException, IdNotFoundException }
+import org.mindrot.jbcrypt.BCrypt
 import scalikejdbc._
 
 import scala.util.Try
@@ -17,8 +18,9 @@ class UserDAO {
   }
 
   def insert(userDTO: UserDTO)(implicit session: DBSession = AutoSession): Try[Int] = Try {
-    sql"INSERT INTO users (userId, email, password, entryCompanyDate, userRole, department, annualLeave, userStatus) VALUES (${userDTO.userId}, ${userDTO.email}, ${userDTO.password}, ${userDTO.entryCompanyDate}, ${userDTO.userRole}, ${userDTO.department}, ${userDTO.annualLeave}, ${userDTO.userStatus})"
-      .updateAndReturnGeneratedKey().apply().toInt
+    val password = BCrypt.hashpw(userDTO.password, BCrypt.gensalt())
+    sql"INSERT INTO users (userId, email, password, entryCompanyDate, userRole, department, annualLeave, userStatus) VALUES (${userDTO.userId}, ${userDTO.email}, ${password}, ${userDTO.entryCompanyDate}, ${userDTO.userRole}, ${userDTO.department}, ${userDTO.annualLeave}, ${userDTO.userStatus})"
+      .update().apply()
   }
 
   def getByID(id: Int)(implicit dbsession: DBSession = AutoSession): Try[UserDTO] = Try {

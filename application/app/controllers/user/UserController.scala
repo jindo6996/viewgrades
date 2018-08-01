@@ -2,11 +2,11 @@ package controllers.user
 
 import controllers.auth.Secured
 import controllers.exceptions.FormErrorException
-import controllers.forms.LoginForm.loginForm
+import controllers.forms.AddUserForm
 import controllers.forms.AddUserForm.addUserForm
 import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject.{ Inject, Singleton }
-import model.UserRepository
+import model._
 import play.api.mvc.{ AbstractController, ControllerComponents, Flash }
 import services.AccountService
 @Singleton
@@ -25,20 +25,20 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
   //    Ok(views.html.users.createUser(pwd))
   //  }
 
-  //  def processAddUser = withAuth { email => implicit request =>
-  //    (for {
-  //      loginInfo <- validateForm(loginForm)
-  //      userInfo <- userRepository.resolveByEmail(loginInfo.email)
-  //      if (AccountService.checkPassword(loginInfo.password, userInfo.password))
-  //    } yield {
-  //      Redirect("/users").withSession("email" -> userInfo.email)
-  //    }).recover {
-  //      case formErr: FormErrorException[LoginInfo] => Redirect("/").flashing(Flash(formErr.formError.data))
-  //      case userErr: EmailNotFoundException        => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-  //      case userErr: IdNotFoundException           => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-  //      case e: NoSuchElementException              => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-  //    }.get
-  //  }
+  def processAddUser = withAuth { email => implicit request =>
+    (for {
+      userInfo <- validateForm(addUserForm)
+      userInfo <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, "123456", userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
+    } yield {
+      Redirect("/users")
+    }).recover {
+      //      case formErr: FormErrorException[AddUserForm] => Redirect("/").flashing(Flash(formErr.formError.data))
+      //      case userErr: EmailNotFoundException          => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
+      //      case userErr: IdNotFoundException             => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
+      //      case e: NoSuchElementException                => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
+      case e: Exception => BadRequest(e.toString)
+    }.get
+  }
 
   def editUser = withAuth { email => implicit request =>
     Ok(views.html.users.editUser("add user"))

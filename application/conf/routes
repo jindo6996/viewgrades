@@ -17,6 +17,8 @@ POST    /                      controllers.auth.AuthController.processLogin
 
 GET     /users                  controllers.user.UserController.listUser
 
+POST    /users                  controllers.user.UserController.processAddUser
+
 GET     /logout                 controllers.auth.AuthController.logout
 
 GET     /createAccount                 controllers.auth.AuthController.logout

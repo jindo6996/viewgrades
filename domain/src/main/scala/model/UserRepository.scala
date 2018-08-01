@@ -15,7 +15,7 @@ class UserRepository @Inject() (userDAO: UserDAO) {
     userDAO.getAll.map(_.map(UserDomainService.toEntity)).get
   }
 
-  def store(entity: User): Try[User] = Try {
-    userDAO.getByID(userDAO.insert(UserDomainService.toDataTransferObject(entity)).get).map(UserDomainService.toEntity).get
+  def store(entity: User): Try[Unit] = Try {
+    userDAO.insert(UserDomainService.toDataTransferObject(entity))
   }
 }

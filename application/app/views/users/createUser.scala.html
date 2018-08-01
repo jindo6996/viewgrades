@@ -1,4 +1,6 @@
 @(addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@import helper._
+
 <div class="row">
     <div class="col-md-12 border">
         <h2> Create Account</h2>
@@ -6,7 +8,8 @@
 </div>
 <div class="row">
     <div class="col-md-12 border">
-        @helper.form(action = auth.routes.AuthController.processLogin(), '_id -> "signin_form") {
+        @helper.form(action = user.routes.UserController.processAddUser(), '_id -> "signin_form") {
+            @CSRF.formField
             <div class="form-row">
                 <div class="col-md-2 my-3">
                     @helper.inputText(addUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
@@ -20,7 +23,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-2 my-3">
-                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("Staff")), Seq("Admin"->"Admin","Staff"->"Staff"), '_label -> "Role:", '_showConstraints -> false)
+                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false)
                 </div>
                 <div class="col-md-3 my-3">
                     @helper.select(addUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
