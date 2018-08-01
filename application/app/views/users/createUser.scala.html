@@ -1,5 +1,5 @@
-@(addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 @import helper._
+@(addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 
 <div class="row">
     <div class="col-md-12 border">
@@ -23,7 +23,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-2 my-3">
-                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false)
+                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
                 </div>
                 <div class="col-md-3 my-3">
                     @helper.select(addUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")

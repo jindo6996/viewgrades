@@ -75,3 +75,10 @@
         width: 100%;
     }
 }
+#userRole_Admin{
+    width: 15%;
+    display: inline-block;
+}
+label[for = 'userRole_Admin']{
+    width: 65%;
+}

@@ -1,14 +1,11 @@
 package controllers.user
 
 import controllers.auth.Secured
-import controllers.exceptions.FormErrorException
-import controllers.forms.AddUserForm
-import controllers.forms.AddUserForm.addUserForm
-import exceptions.{ EmailNotFoundException, IdNotFoundException }
-import javax.inject.{ Inject, Singleton }
+import javax.inject._
 import model._
-import play.api.mvc.{ AbstractController, ControllerComponents, Flash }
-import services.AccountService
+import play.api.mvc.{ AbstractController, ControllerComponents }
+import controllers.forms.AddUserForm._
+
 @Singleton
 class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents) extends AbstractController(cc)
   with play.api.i18n.I18nSupport with controllers.BaseController with Secured {
@@ -17,14 +14,6 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     Ok(views.html.users.userlist(userRepository.resolveAll.get, addUserForm))
 
   }
-  //  def addUser = withAuth { email => implicit request =>
-  //    import org.apache.commons.lang3.RandomStringUtils
-  //    val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"
-  //
-  //    val pwd = RandomStringUtils.random(8, characters)
-  //    Ok(views.html.users.createUser(pwd))
-  //  }
-
   def processAddUser = withAuth { email => implicit request =>
     (for {
       userInfo <- validateForm(addUserForm)
@@ -41,6 +30,6 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
   }
 
   def editUser = withAuth { email => implicit request =>
-    Ok(views.html.users.editUser("add user"))
+    Ok("sad")
   }
 }
