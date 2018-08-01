@@ -2,15 +2,19 @@ package controllers.forms
 
 import play.api.data._
 import play.api.data.Forms._
-
-case class AddUserForm(email: String, password: String)
+import play.api.data.format.Formats._
+case class AddUserForm(userId: String, email: String, entryCompanyDate: String, userRole: String, department: String, annualLeave: Float)
 
 object AddUserForm {
 
   val addUserForm = Form(
     mapping(
+      "userId" -> nonEmptyText,
       "email" -> email,
-      "password" -> nonEmptyText
+      "entryCompanyDate" -> nonEmptyText,
+      "userRole" -> nonEmptyText,
+      "department" -> nonEmptyText,
+      "annualLeave" -> of[Float]
     )(AddUserForm.apply)(AddUserForm.unapply)
   )
 }

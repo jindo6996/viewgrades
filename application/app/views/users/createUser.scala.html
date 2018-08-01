@@ -1,55 +1,39 @@
-@(message: String)(implicit request: Request[_], flash: Flash)
-@main("Septeni Timesheet Managament") {
-    <div class="row">
-        <div class="col-md-6 border">
-            <h2> Create Account</h2>
-        </div>
-        <div class="col-md-3"></div>
+@(addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+<div class="row">
+    <div class="col-md-12 border">
+        <h2> Create Account</h2>
     </div>
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 border">
-            <form class="">
-                <div class="form-row">
-                    <div class="col-md-2 my-3">
-                        <label>Staff code: </label>
-                        <input type="text" class="form-control" placeholder="Code" > </div>
-                    <div class="col-md-6 my-3">
-                        <label>Email address: </label>
-                        <input type="email" class="form-control" placeholder="Email"> </div>
-                    <div class="col-md-4 my-3">
-                        <label>Entry Company Date: </label>
-                        <input type="date" class="form-control"> </div>
+</div>
+<div class="row">
+    <div class="col-md-12 border">
+        @helper.form(action = auth.routes.AuthController.processLogin(), '_id -> "signin_form") {
+            <div class="form-row">
+                <div class="col-md-2 my-3">
+                    @helper.inputText(addUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
                 </div>
-                <div class="form-row">
-                    <div class="col-md-2 my-3">
-                        <label>Role: </label>
-                        <br>
-                        <input type="radio" value="ADMIN" name="role"> Admin
-                        <br>
-                        <input type="radio" value="STAFF" name="role" checked> Staff </div>
-                    <div class="col-md-3 my-3">
-                        <label>Department: </label>
-                        <br>
-                        <select name="department" class="btn dropdown-toggle btn-light ">
-                            <option value="Back Office">Back Office</option>
-                            <option value="Sacdev">Sacdev</option>
-                            <option value="Mocua">Mocua</option>
-                            <option value="Precog">Precog</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 my-3">
-                        <label>Annual leave: </label>
-                        <input type="text" class="form-control" value="12">
-                    </div>
+                <div class="col-md-6 my-3">
+                    @helper.inputText(addUserForm("email"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:")
+                </div>
+                <div class="col-md-4 my-3">
+                    @helper.inputDate(addUserForm("entryCompanyDate"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-2 my-3">
+                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("Staff")), Seq("Admin"->"Admin","Staff"->"Staff"), '_label -> "Role:", '_showConstraints -> false)
+                </div>
+                <div class="col-md-3 my-3">
+                    @helper.select(addUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
+                </div>
+                <div class="col-md-3 my-3">
+                    @helper.inputText(addUserForm("annualLeave").copy(value = Option("12")),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", '_value -> 12)
+                </div>
 
-                </div>
-                <div class="col-md-12 my-3">
-                    <button type="submit" class="btn bg-gradient2">Create</button>
-                    <a class="btn btn-info" href="/">Cancel</a>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="col-md-12 my-3">
+                <button type="submit" class="btn bg-gradient2">Create</button>
+                <button type="button" onclick="document.getElementById('create_user').style.display='none'" class="btn btn-info">Cancel</button>
+            </div>
+        }
     </div>
-}
+</div>
