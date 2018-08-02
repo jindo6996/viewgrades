@@ -1,12 +1,12 @@
 
 @import controllers.forms.EditUserForm
-@(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm],test: String)(implicit request: Request[_], flash: Flash, messages: Messages)
 @main("Septeni Timesheet Managament") {
     <div class="row">
         <div class="col-md-4 my-1">
             <h2>Account Mangament</h2>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3"> @test </div>
         <div class="col-md-2">
             <button onclick="document.getElementById('create_user').style.display='block'" class="btn bg-gradient2 m-2">Create account</button>
         </div>
@@ -52,33 +52,9 @@
     </div>
     <div class="row">
         <div class="col-md-12 form-row">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="btn btn-outline-secondary" id = "pagging_previous">
-                        <span>«</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="btn btn-outline-secondary" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="btn btn-outline-secondary" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="btn btn-outline-secondary" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="btn btn-outline-secondary" href="#">4</a>
-                </li>
-                <li class="page-item">
-                    <a class="btn btn-outline-secondary" id = "pagging_next">
-                        <span>»</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
+            <div class="pagination">
 
-            </ul>
+            </div>
             <div class="page-item">
                 <select name="department" class="btn dropdown-toggle btn-light mx-1" id='length_change'>
                     <option value="10">10</option>
@@ -88,7 +64,6 @@
                 </select>
             </div>
         </div>
-
     </div>
     @*Creat user form*@
     @if(addUserForm.hasGlobalErrors){
@@ -115,9 +90,24 @@
     <script type="text/javascript">
             var table = $('#example').DataTable({
                 "initComplete": function( settings, json ) {
-                    $(".dataTables_paginate").append($(".pagination"));
+                    $(".pagination").append($(".dataTables_paginate"));
+
+                },
+                "fnHeaderCallback": function(){
+                    $('.dataTables_info').hide();
+                    $('.dataTables_filter').hide();
+                    $('.dataTables_length').hide();
+
+                },
+                language: {
+                    paginate: {
+                        next: '>>',
+                        previous: '<<'
+                    }
+                },
+                "drawCallback": function( settings ) {
+                    $(".paginate_button").addClass('btn btn-outline-secondary');
                 }
-                // dom: 't'         // This shows just the table
             });
 
 
