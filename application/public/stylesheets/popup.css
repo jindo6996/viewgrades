@@ -75,10 +75,13 @@
         width: 100%;
     }
 }
-#userRole_Admin{
+#userRole_ADMIN{
     width: 15%;
     display: inline-block;
 }
-label[for = 'userRole_Admin']{
+label[for = 'userRole_ADMIN']{
     width: 65%;
+}
+dl .error{
+    color: red;
 }

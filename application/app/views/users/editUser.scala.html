@@ -2,31 +2,31 @@
 @(editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 
 <h2 class=> Edit Account</h2>
-@helper.form(action = user.routes.UserController.processAddUser(), '_id -> "signin_form") {
+@helper.form(action = user.routes.UserController.processEditUser("111"), '_id -> "signin_form") {
     @CSRF.formField
     <div class="form-row">
         <div class="col-md-2 my-3">
-            @helper.inputText(editUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
+            @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
         </div>
         <div class="col-md-6 my-3">
-            @helper.inputText(editUserForm("email"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:")
+            @helper.inputText(editUserForm("emailEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:")
         </div>
         <div class="col-md-4 my-3">
-            @helper.inputDate(editUserForm("entryCompanyDate"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
+            @helper.inputDate(editUserForm("entryCompanyDateEdit"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
         </div>
     </div>
     <div class="form-row">
         <div class="col-md-2 my-3">
-            @helper.inputRadioGroup(editUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
+            @helper.inputRadioGroup(editUserForm("userRoleEdit").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
         </div>
         <div class="col-md-3 my-3">
-            @helper.select(editUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
+            @helper.select(editUserForm("departmentEdit"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
         </div>
         <div class="col-md-3 my-3">
-            @helper.inputText(editUserForm("annualLeave").copy(value = Option("12")),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", '_value -> 12)
+            @helper.inputText(editUserForm("annualLeaveEdit").copy(value = Option("12")),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", '_value -> 12)
         </div>
         <div class="col-md-4 my-3">
-            @helper.inputRadioGroup(editUserForm("status").copy(value = Option("STAFF")), Seq("ACTIVE"->"Active","INACTIVE"->"Inactive"), '_label -> "Status:", '_showConstraints -> false,'style->"display:inline-block")
+            @helper.inputRadioGroup(editUserForm("statusEdit").copy(value = Option("STAFF")), Seq("ACTIVE"->"Active","INACTIVE"->"Inactive"), '_label -> "Status:", '_showConstraints -> false,'style->"display:inline-block")
         </div>
 
     </div>

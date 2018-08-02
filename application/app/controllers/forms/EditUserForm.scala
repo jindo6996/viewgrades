@@ -3,19 +3,19 @@ package controllers.forms
 import play.api.data._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-case class EditUserForm(userId: String, email: String, entryCompanyDate: String, userRole: String, department: String, annualLeave: Float, status: String)
+case class EditUserForm(userIdEdit: String, emailEdit: String, entryCompanyDateEdit: String, userRoleEdit: String, departmentEdit: String, annualLeaveEdit: Float, statusEdit: String)
 
 object EditUserForm {
 
   val editUserForm = Form(
     mapping(
-      "userId" -> nonEmptyText,
-      "email" -> email,
-      "entryCompanyDate" -> nonEmptyText,
-      "userRole" -> nonEmptyText,
-      "department" -> nonEmptyText,
-      "annualLeave" -> of[Float],
-      "status" -> nonEmptyText
+      "userIdEdit" -> nonEmptyText,
+      "emailEdit" -> email,
+      "entryCompanyDateEdit" -> nonEmptyText,
+      "userRoleEdit" -> nonEmptyText,
+      "departmentEdit" -> nonEmptyText,
+      "annualLeaveEdit" -> of[Float],
+      "statusEdit" -> nonEmptyText
     )(EditUserForm.apply)(EditUserForm.unapply)
   )
 }

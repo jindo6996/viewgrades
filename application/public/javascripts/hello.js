@@ -8,19 +8,13 @@ $(document).ready(function () {
             $('dd.error').hide();
             $('span.error').hide();
         });
-        // window.history.forward();
-        // window.history.forward();
+        $('.form-control').focusin(function(){
+            $('dd.error').hide();
+            $('span.error').hide();
+        });
+
     });
-    // if (window.hasClass('error')) alert(2);
-    // if (window.history && window.history.pushState) {
-    //
-    //     window.history.pushState("forward", null, null);
-    //
-    //     $(window).on('popstate', function() {
-    //          alert(1);//location.replace(document.referrer);
-    //     });
-    //
-    // }
+
 });
 
 

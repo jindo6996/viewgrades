@@ -1,11 +1,13 @@
 package controllers.user
 
 import controllers.auth.Secured
+import controllers.exceptions.FormErrorException
+import controllers.forms.{ AddUserForm, EditUserForm }
+import controllers.forms.AddUserForm._
+import controllers.forms.EditUserForm._
 import javax.inject._
 import model._
 import play.api.mvc.{ AbstractController, ControllerComponents }
-import controllers.forms.AddUserForm._
-import controllers.forms.EditUserForm._
 
 @Singleton
 class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents) extends AbstractController(cc)
@@ -23,26 +25,20 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     } yield {
       Redirect("/users")
     }).recover {
-      //      case formErr: FormErrorException[AddUserForm] => Redirect("/").flashing(Flash(formErr.formError.data))
-      //      case userErr: EmailNotFoundException          => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-      //      case userErr: IdNotFoundException             => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-      //      case e: NoSuchElementException                => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-      case e: Exception => BadRequest(e.toString)
+      case formErr: FormErrorException[AddUserForm] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("error"), editUserForm))
+      //      case e: Exception                             => BadRequest(e.toString)
     }.get
   }
 
-  def processEditUser = withAuth { email => implicit request =>
+  def processEditUser(id: String) = withAuth { email => implicit request =>
     (for {
       userInfo <- validateForm(editUserForm)
 
     } yield {
       Redirect("/users")
     }).recover {
-      //      case formErr: FormErrorException[AddUserForm] => Redirect("/").flashing(Flash(formErr.formError.data))
-      //      case userErr: EmailNotFoundException          => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-      //      case userErr: IdNotFoundException             => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-      //      case e: NoSuchElementException                => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
-      case e: Exception => BadRequest(e.toString)
+      case formErr: FormErrorException[EditUserForm] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, formErr.formError.withGlobalError("error")))
+      case e: Exception                              => BadRequest(e.toString)
     }.get
   }
 

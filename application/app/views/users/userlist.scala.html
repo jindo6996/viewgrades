@@ -91,12 +91,22 @@
 
     </div>
     @*Creat user form*@
-    <div class="modal" id="create_user">
+    @if(addUserForm.hasGlobalErrors){
+        <div class="modal" id="create_user" style="display: block">
+    }else{
+        <div class="modal" id="create_user">
+    }
+
         <div class="col-md-5 border modal-content animate">
             @createUser(addUserForm)
         </div>
     </div>
-    <div class="modal" id="edit_user">
+    @*edit form*@
+    @if(editUserForm.hasGlobalErrors){
+        <div class="modal" id="edit_user" style="display: block">
+        }else{
+        <div class="modal" id="edit_user">
+        }
         <div class="col-md-5 border modal-content animate">
             @editUser(editUserForm)
         </div>
