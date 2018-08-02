@@ -1,41 +1,37 @@
+@import helper._
+@(editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+
 <h2 class=> Edit Account</h2>
-<form class="" action="./#">
+@helper.form(action = user.routes.UserController.processAddUser(), '_id -> "signin_form") {
+    @CSRF.formField
     <div class="form-row">
         <div class="col-md-2 my-3">
-            <label>Staff code: </label>
-            <input type="text" class="form-control" placeholder="Code" > </div>
+            @helper.inputText(editUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
+        </div>
         <div class="col-md-6 my-3">
-            <label>Email address: </label>
-            <input type="email" class="form-control" placeholder="Email"> </div>
+            @helper.inputText(editUserForm("email"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:")
+        </div>
         <div class="col-md-4 my-3">
-            <label>Entry Company Date: </label>
-            <input type="date" class="form-control disable-scroll"> </div>
+            @helper.inputDate(editUserForm("entryCompanyDate"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
+        </div>
     </div>
     <div class="form-row">
         <div class="col-md-2 my-3">
-            <label>Role: </label>
-            <br>
-            <input type="radio" value="ADMIN" name="role"> Admin
-            <br>
-            <input type="radio" value="STAFF" name="role" checked> Staff </div>
-        <div class="col-md-3 my-3">
-            <label>Department: </label>
-            <br>
-            <select name="department" class="btn dropdown-toggle btn-light disable-scroll">
-                <option value="Back Office">Back Office</option>
-                <option value="Sacdev">Sacdev</option>
-                <option value="Mocua">Mocua</option>
-                <option value="Procog">Procog</option>
-                <option value="Other">Other</option>
-            </select>
+            @helper.inputRadioGroup(editUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
         </div>
         <div class="col-md-3 my-3">
-            <label>Annual leave: </label>
-            <input type="text" class="form-control" value="12"> </div>
+            @helper.select(editUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
+        </div>
+        <div class="col-md-3 my-3">
+            @helper.inputText(editUserForm("annualLeave").copy(value = Option("12")),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", '_value -> 12)
+        </div>
+        <div class="col-md-4 my-3">
+            @helper.inputRadioGroup(editUserForm("status").copy(value = Option("STAFF")), Seq("ACTIVE"->"Active","INACTIVE"->"Inactive"), '_label -> "Status:", '_showConstraints -> false,'style->"display:inline-block")
+        </div>
 
     </div>
     <div class="col-md-12 my-3">
-        <button type="submit" class="btn cancelbtn" style="background-color:green">Create</button>
-        <button type="button" onclick="document.getElementById('edit_user').style.display='none'" class="btn cancelbtn">Cancel</button>
+        <button type="submit" class="btn bg-primary">Edit</button>
+        <button type="button" onclick="document.getElementById('edit_user').style.display='none'" class="btn btn-info   ">Cancel</button>
     </div>
-</form>
+}

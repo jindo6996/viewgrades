@@ -1,5 +1,6 @@
 
-@(users: List[model.User], addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@import controllers.forms.EditUserForm
+@(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 @main("Septeni Timesheet Managament") {
     <div class="row">
         <div class="col-md-4 my-1">
@@ -50,10 +51,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-12 form-row">
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="btn btn-outline-secondary" href="#">
+                    <a class="btn btn-outline-secondary" id = "pagging_previous">
                         <span>«</span>
                         <span class="sr-only">Previous</span>
                     </a>
@@ -71,21 +72,21 @@
                     <a class="btn btn-outline-secondary" href="#">4</a>
                 </li>
                 <li class="page-item">
-                    <a class="btn btn-outline-secondary" href="#">
+                    <a class="btn btn-outline-secondary" id = "pagging_next">
                         <span>»</span>
                         <span class="sr-only">Next</span>
                     </a>
                 </li>
-                <li class="page-item">
-                    <select name="department" class="btn dropdown-toggle btn-light mx-1">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="200">200</option>
-                    </select>
-                </li>
+
             </ul>
+            <div class="page-item">
+                <select name="department" class="btn dropdown-toggle btn-light mx-1" id='length_change'>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
         </div>
 
     </div>
@@ -97,22 +98,29 @@
     </div>
     <div class="modal" id="edit_user">
         <div class="col-md-5 border modal-content animate">
-        @editUser()
+            @editUser(editUserForm)
         </div>
     </div>
 
     <script type="text/javascript">
             var table = $('#example').DataTable({
-                paging: true,
-                bFilter: true,
-                ordering: true,
-                searching: true,
-                dom: 't'         // This shows just the table
+                "initComplete": function( settings, json ) {
+                    $(".dataTables_paginate").append($(".pagination"));
+                }
+                // dom: 't'         // This shows just the table
             });
+
+
+
             // #myInput is a <input type="text"> element
             $('#myInputTextField').on( 'keyup', function () {
                 table.search( this.value ).draw();
             } );
+
+            $('#length_change').val(table.page.len());
+            $('#length_change').change( function() {
+                table.page.len( $(this).val() ).draw();
+            });
 
     </script>
 

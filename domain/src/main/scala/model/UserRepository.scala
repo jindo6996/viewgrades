@@ -18,4 +18,5 @@ class UserRepository @Inject() (userDAO: UserDAO) {
   def store(entity: User): Try[Unit] = Try {
     userDAO.insert(UserDomainService.toDataTransferObject(entity))
   }
+
 }
