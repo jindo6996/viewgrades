@@ -1,12 +1,12 @@
 
 @import controllers.forms.EditUserForm
-@(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm],test: String)(implicit request: Request[_], flash: Flash, messages: Messages)
+@(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 @main("Septeni Timesheet Managament") {
     <div class="row">
         <div class="col-md-4 my-1">
             <h2>Account Mangament</h2>
         </div>
-        <div class="col-md-3"> @test </div>
+        <div class="col-md-3"></div>
         <div class="col-md-2">
             <button onclick="document.getElementById('create_user').style.display='block'" class="btn bg-gradient2 m-2">Create account</button>
         </div>
@@ -94,7 +94,6 @@
 
                 },
                 "fnHeaderCallback": function(){
-                    $('.dataTables_info').hide();
                     $('.dataTables_filter').hide();
                     $('.dataTables_length').hide();
 
@@ -106,7 +105,9 @@
                     }
                 },
                 "drawCallback": function( settings ) {
+
                     $(".paginate_button").addClass('btn btn-outline-secondary');
+                    $(".current").addClass('disabled')
                 }
             });
 

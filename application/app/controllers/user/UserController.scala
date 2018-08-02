@@ -1,9 +1,11 @@
 package controllers.user
 
 import controllers.auth.Secured
+import controllers.exceptions.FormErrorException
+import controllers.forms.{ AddUserForm, EditUserForm }
 import javax.inject._
 import model._
-import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.mvc.{ AbstractController, ControllerComponents }
 import controllers.forms.AddUserForm._
 import controllers.forms.EditUserForm._
 import org.apache.commons.lang3.RandomStringUtils
@@ -31,7 +33,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
   }
 
   def listUser = withAuth { email => implicit request =>
-    Ok(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, editUserForm, randomString))
+    Ok(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, editUserForm))
   }
 
   def processAddUser = withAuth { email => implicit request =>
@@ -42,7 +44,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
       Redirect("/users")
     }).recover {
       case formErr: FormErrorException[AddUserForm] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("error"), editUserForm))
-      //      case e: Exception                             => BadRequest(e.toString)
+
     }.get
   }
 
