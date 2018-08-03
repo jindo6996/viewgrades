@@ -1,6 +1,7 @@
 package model
 
 import dao.UserDAO
+import exceptions.EntityDuplicateException
 import javax.inject.Inject
 import service.UserDomainService
 
@@ -16,7 +17,17 @@ class UserRepository @Inject() (userDAO: UserDAO) {
   }
 
   def store(entity: User): Try[User] = Try {
-    userDAO.insert(UserDomainService.toDataTransferObject(entity))
-    userDAO.getByEmail(entity.email).map(UserDomainService.toEntity).get
+
+    if (userDAO.isEmailNExist(entity.email)) {
+      if (userDAO.isIdNotExist(entity.userId.value)) {
+        userDAO.insert(UserDomainService.toDataTransferObject(entity))
+        userDAO.getByEmail(entity.email).map(UserDomainService.toEntity).get
+      } else {
+        throw EntityDuplicateException("ID Duplicate", entity)
+      }
+    } else {
+      throw EntityDuplicateException("Email Duplicate", entity)
+    }
+
   }
 }

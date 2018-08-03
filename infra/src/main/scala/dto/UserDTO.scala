@@ -10,4 +10,5 @@ object UserDTO extends SQLSyntaxSupport[UserDTO] {
     rs.string("entryCompanyDate"), rs.string("userRole"), rs.string("department"),
     rs.float("annualLeave"), rs.string("userStatus"), rs.string("lastModified")
   )
+
 }

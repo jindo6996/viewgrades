@@ -23,8 +23,11 @@ class UserDAO {
       .update().apply()
   }
 
-  def getByID(id: Int)(implicit dbsession: DBSession = AutoSession): Try[UserDTO] = Try {
-    sql"select * from users where userId = ${id} ".map(rs => UserDTO(rs)).single().apply()
-      .getOrElse(throw new IdNotFoundException("User not found"))
+  def isIdNotExist(id: String)(implicit dbsession: DBSession = AutoSession): Boolean = {
+    sql"select * from users where userId = ${id} ".map(rs => UserDTO(rs)).list().apply().isEmpty
+  }
+
+  def isEmailNExist(email: String)(implicit dbsession: DBSession = AutoSession): Boolean = {
+    sql"select * from users where email = ${email} ".map(rs => UserDTO(rs)).list().apply().isEmpty
   }
 }

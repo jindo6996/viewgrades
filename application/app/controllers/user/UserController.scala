@@ -8,6 +8,7 @@ import model._
 import play.api.mvc.{ AbstractController, ControllerComponents }
 import controllers.forms.AddUserForm._
 import controllers.forms.EditUserForm._
+import exceptions.EntityDuplicateException
 import org.apache.commons.lang3.RandomStringUtils
 
 @Singleton
@@ -44,6 +45,10 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
       Redirect("/users")
     }).recover {
       case formErr: FormErrorException[AddUserForm] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("error"), editUserForm))
+      //      case entityDuplicate: EntityDuplicateException[User] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm.fill(AddUserForm(
+      //        entityDuplicate.entity.userId.value,
+      //        entityDuplicate.entity.email, entityDuplicate.entity.entryCompanyDate, entityDuplicate.entity.userRole.value, entityDuplicate.entity.department.name, entityDuplicate.entity.annualLeave
+      //      )).withGlobalError(entityDuplicate.message), editUserForm))
 
     }.get
   }
