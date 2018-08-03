@@ -17,8 +17,7 @@ class UserRepository @Inject() (userDAO: UserDAO) {
   }
 
   def store(entity: User): Try[User] = Try {
-
-    if (userDAO.isEmailNExist(entity.email)) {
+    if (userDAO.isEmailNotExist(entity.email)) {
       if (userDAO.isIdNotExist(entity.userId.value)) {
         userDAO.insert(UserDomainService.toDataTransferObject(entity))
         userDAO.getByEmail(entity.email).map(UserDomainService.toEntity).get
@@ -28,6 +27,14 @@ class UserRepository @Inject() (userDAO: UserDAO) {
     } else {
       throw EntityDuplicateException("Email Duplicate", entity)
     }
+  }
+
+  def resolveById(id: String): Try[User] = Try {
+    userDAO.getById(id).map(UserDomainService.toEntity).get
+  }
+
+  def edit(entity: User): Try[Int] = {
+    userDAO.editUser(UserDomainService.toDataTransferObject(entity))
 
   }
 }

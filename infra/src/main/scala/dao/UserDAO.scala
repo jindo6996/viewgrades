@@ -27,7 +27,17 @@ class UserDAO {
     sql"select * from users where userId = ${id} ".map(rs => UserDTO(rs)).list().apply().isEmpty
   }
 
-  def isEmailNExist(email: String)(implicit dbsession: DBSession = AutoSession): Boolean = {
+  def isEmailNotExist(email: String)(implicit dbsession: DBSession = AutoSession): Boolean = {
     sql"select * from users where email = ${email} ".map(rs => UserDTO(rs)).list().apply().isEmpty
   }
+
+  def getById(id: String)(implicit dbsession: DBSession = AutoSession): Try[UserDTO] = Try {
+    sql"select * from users where UserId = ${id} ".map(rs => UserDTO(rs)).single().apply()
+      .getOrElse(throw new IdNotFoundException("User not found"))
+  }
+
+  def editUser(userDTO: UserDTO)(implicit session: DBSession = AutoSession): Try[Int] = Try {
+    sql"UPDATE users SET userId=${userDTO.userId},email=${userDTO.email},entryCompanyDate=${userDTO.entryCompanyDate},userRole=${userDTO.userRole},department=${userDTO.department},annualLeave=${userDTO.annualLeave},userStatus= ${userDTO.userStatus} WHERE userId=${userDTO.userId}".update().apply()
+  }
+
 }

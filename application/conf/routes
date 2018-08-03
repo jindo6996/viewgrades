@@ -25,4 +25,4 @@ GET     /createAccount                 controllers.auth.AuthController.logout
 
 
 
-GET     /users/edit/:id         controllers.user.UserController.processEditUser(id:String)
+POST     /users/edit/         controllers.user.UserController.processEditUser()

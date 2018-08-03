@@ -44,19 +44,16 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     } yield {
       Redirect("/users")
     }).recover {
-      case formErr: FormErrorException[AddUserForm] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("error"), editUserForm))
-      //      case entityDuplicate: EntityDuplicateException[User] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm.fill(AddUserForm(
-      //        entityDuplicate.entity.userId.value,
-      //        entityDuplicate.entity.email, entityDuplicate.entity.entryCompanyDate, entityDuplicate.entity.userRole.value, entityDuplicate.entity.department.name, entityDuplicate.entity.annualLeave
-      //      )).withGlobalError(entityDuplicate.message), editUserForm))
+      case formErr: FormErrorException[AddUserForm]        => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("error"), editUserForm))
+      case entityDuplicate: EntityDuplicateException[User] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm.bindFromRequest().withGlobalError(entityDuplicate.message), editUserForm))
 
     }.get
   }
 
-  def processEditUser(id: String) = withAuth { email => implicit request =>
+  def processEditUser() = withAuth { email => implicit request =>
     (for {
       userInfo <- validateForm(editUserForm)
-
+      editedUser <- userRepository.edit(User(UserId(userInfo.userIdEdit), userInfo.emailEdit, "123456", userInfo.entryCompanyDateEdit, UserRole.fromString(userInfo.userRoleEdit).get, Department(userInfo.departmentEdit), userInfo.annualLeaveEdit, UserStatus.fromString(userInfo.statusEdit).get, ""))
     } yield {
       Redirect("/users")
     }).recover {
