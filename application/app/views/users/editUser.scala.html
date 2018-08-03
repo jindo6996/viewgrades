@@ -2,7 +2,7 @@
 @(editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 
 <h2 class=> Edit Account</h2>
-@helper.form(action = user.routes.UserController.processEditUser("111"), '_id -> "signin_form") {
+@helper.form(action = user.routes.UserController.processEditUser(), '_id -> "signin_form") {
     @CSRF.formField
     <div class="form-row">
         <div class="col-md-2 my-3">

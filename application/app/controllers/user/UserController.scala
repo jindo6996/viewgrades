@@ -53,7 +53,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     }.get
   }
 
-  def processEditUser(id: String) = withAuth { email => implicit request =>
+  def processEditUser() = withAuth { email => implicit request =>
     (for {
       userInfo <- validateForm(editUserForm)
 
