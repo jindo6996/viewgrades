@@ -85,3 +85,9 @@ label[for = 'userRole_ADMIN']{
 dl .error{
     color: red;
 }
+label[for = 'userRoleEdit_ADMIN']{
+    width: 65%;
+}
+dl .error{
+    color: red;
+}
