@@ -11,7 +11,8 @@
             <button onclick="document.getElementById('create_user').style.display='block'" class="btn bg-gradient2 m-2">Create account</button>
         </div>
         <div class="col-md-3 table-sort-search-container">
-            <input class="form-control m-2" id="myInputTextField" type="search" placeholder="Search" aria-controls="example"> </div>
+            <input class="form-control m-2" id="myInputTextField" type="search" placeholder="Search" aria-controls="example">
+        </div>
     </div>
     
     <div class="row">
@@ -89,6 +90,7 @@
 
     <script type="text/javascript">
             var table = $('#example').DataTable({
+                
                 "initComplete": function( settings, json ) {
                     $(".pagination").append($(".dataTables_paginate"));
 
@@ -125,5 +127,6 @@
             });
 
     </script>
+
 
 }
