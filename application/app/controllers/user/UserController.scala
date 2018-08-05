@@ -44,8 +44,8 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     } yield {
       Redirect("/users")
     }).recover {
-      case formErr: FormErrorException[EditUserForm] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, formErr.formError.withGlobalError("error")))
-      case e: Exception                              => BadRequest(e.toString)
+      case formErr: FormErrorException[EditUserForm]       => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, formErr.formError.withGlobalError("error")))
+      case entityDuplicate: EntityDuplicateException[User] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, editUserForm.bindFromRequest().withGlobalError(entityDuplicate.message)))
     }.get
   }
   private def sendEmail(toMail: String, pass: String) = {

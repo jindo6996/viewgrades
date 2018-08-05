@@ -34,6 +34,7 @@ class UserRepository @Inject() (userDAO: UserDAO) {
   }
 
   def edit(entity: User): Try[Int] = {
+
     userDAO.editUser(UserDomainService.toDataTransferObject(entity))
   }
 }
