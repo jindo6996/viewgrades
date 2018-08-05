@@ -17,7 +17,9 @@ lazy val commonSettings = Seq(
     "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.6.0-scalikejdbc-3.2",
     "ch.qos.logback"  %  "logback-classic"   % "1.2.3",
     specs2 % Test,
-    "org.mindrot" % "jbcrypt" % "0.3m"
+    "org.mindrot" % "jbcrypt" % "0.3m",
+    "com.typesafe.play" %% "play-mailer" % "6.0.1",
+    "com.typesafe.play" %% "play-mailer-guice" % "6.0.1"
   )
 )
 

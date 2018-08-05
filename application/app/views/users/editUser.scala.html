@@ -6,7 +6,7 @@
     @CSRF.formField
     <div class="form-row">
         <div class="col-md-2 my-3">
-            @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
+            @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:",  'readonly -> "readonly")
         </div>
         <div class="col-md-6 my-3">
             @helper.inputText(editUserForm("emailEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:")

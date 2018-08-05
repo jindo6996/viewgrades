@@ -6,6 +6,7 @@ import controllers.forms.LoginInfo
 import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject._
 import model.UserRepository
+import model.UserRole.Admin
 import play.api.mvc._
 import services.AccountService
 /**
@@ -25,7 +26,8 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
     if (request.session.get("email").isEmpty) {
       //      if (request.flash.get("error").isDefined) print(request.flash.get("error").get)
       Ok(views.html.login.login(loginForm))
-    } else Redirect("/users")
+    } else if (request.session.get("role").get == "Admin") Redirect("/users")
+    else Ok(views.html.users.view())
   }
 
   def processLogin = Action { implicit request =>
@@ -34,7 +36,9 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
       userInfo <- userRepository.resolveByEmail(loginInfo.email)
       if (AccountService.checkPassword(loginInfo.password, userInfo.password))
     } yield {
-      Redirect("/users").withSession("email" -> userInfo.email)
+      if (userInfo.userRole.value == "Admin") {
+        Redirect("/users").withSession("email" -> userInfo.email, "role" -> userInfo.userRole.toString)
+      } else Redirect("/").withSession("email" -> userInfo.email, "role" -> userInfo.userRole.toString)
     }).recover {
       case formErr: FormErrorException[LoginInfo] => Redirect("/").flashing(Flash(formErr.formError.data))
       case userErr: EmailNotFoundException        => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))

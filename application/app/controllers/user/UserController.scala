@@ -9,48 +9,35 @@ import play.api.mvc.{ AbstractController, ControllerComponents }
 import controllers.forms.AddUserForm._
 import controllers.forms.EditUserForm._
 import exceptions.EntityDuplicateException
-import org.apache.commons.lang3.RandomStringUtils
+import play.api.libs.mailer.{ Email, MailerClient }
+import services.AccountService._
 
 @Singleton
-class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents) extends AbstractController(cc)
+class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents, mailerClient: MailerClient) extends AbstractController(cc)
   with play.api.i18n.I18nSupport with controllers.BaseController with Secured {
 
-  def randomString: String = {
-    val upperChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    val lowerChar = "abcdefghijklmnopqrstuvwxyz"
-    val number = "0123456789"
-    val specialChar = "!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"
-
-    val start = 8
-    val end = 20
-    val rnd = new scala.util.Random
-    val randomLenght = start + rnd.nextInt((end - start) + 1)
-
-    val pwd = RandomStringUtils.random(randomLenght, upperChar + lowerChar + number + specialChar)
-    if (pwd.exists(upperChar.contains(_)) && pwd.exists(lowerChar.contains(_)) && pwd.exists(number.contains(_)) && pwd.exists(specialChar.contains(_)))
-      pwd
-    else
-      randomString
-  }
-
   def listUser = withAuth { email => implicit request =>
+    require(request.session.get("role").get == "Admin")
     Ok(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, editUserForm))
   }
 
   def processAddUser = withAuth { email => implicit request =>
+    require(request.session.get("role").get == "Admin")
+    val password = randomString
     (for {
       userInfo <- validateForm(addUserForm)
-      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, "123456", userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
+      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, "123123", userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
     } yield {
+      //      sendEmail(userInfo.email, password)
       Redirect("/users")
     }).recover {
-      case formErr: FormErrorException[AddUserForm]        => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("error"), editUserForm))
+      case formErr: FormErrorException[AddUserForm]        => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("Form Error"), editUserForm))
       case entityDuplicate: EntityDuplicateException[User] => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, addUserForm.bindFromRequest().withGlobalError(entityDuplicate.message), editUserForm))
-
     }.get
   }
 
   def processEditUser() = withAuth { email => implicit request =>
+    require(request.session.get("role").get == "Admin")
     (for {
       userInfo <- validateForm(editUserForm)
       editedUser <- userRepository.edit(User(UserId(userInfo.userIdEdit), userInfo.emailEdit, "123456", userInfo.entryCompanyDateEdit, UserRole.fromString(userInfo.userRoleEdit).get, Department(userInfo.departmentEdit), userInfo.annualLeaveEdit, UserStatus.fromString(userInfo.statusEdit).get, ""))
@@ -61,8 +48,14 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
       case e: Exception                              => BadRequest(e.toString)
     }.get
   }
-
-  def editUser = withAuth { email => implicit request =>
-    Ok("sad")
+  private def sendEmail(toMail: String, pass: String) = {
+    val mailSend = toMail.split("@")
+    val email = Email(
+      "Password of Timesheet",
+      "septenitimesheetmanager@gmail.com",
+      Seq(s"<$toMail>"),
+      bodyText = Some(s"Dear $mailSend \nThis your passwork for website timesheet manager:$pass\nThank you and best regards,\nManager")
+    )
+    mailerClient.send(email)
   }
 }

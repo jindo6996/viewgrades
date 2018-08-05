@@ -10,7 +10,11 @@
     <div class="col-md-12 border">
         @helper.form(action = user.routes.UserController.processAddUser(), '_id -> "signin_form") {
             @CSRF.formField
+            @if(addUserForm.hasGlobalErrors){
+                <span class="error" style="color: red">@{addUserForm.globalError.get.message}</span>
+            }
             <div class="form-row">
+
                 <div class="col-md-2 my-3">
                     @helper.inputText(addUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:")
                 </div>
