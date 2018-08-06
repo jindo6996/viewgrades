@@ -19,7 +19,8 @@ lazy val commonSettings = Seq(
     specs2 % Test,
     "org.mindrot" % "jbcrypt" % "0.3m",
     "com.typesafe.play" %% "play-mailer" % "6.0.1",
-    "com.typesafe.play" %% "play-mailer-guice" % "6.0.1"
+    "com.typesafe.play" %% "play-mailer-guice" % "6.0.1",
+    "com.typesafe" %% "play-plugins-mailer" % "2.1-RC2"
   )
 )
 
