@@ -4,6 +4,9 @@
 <h2 class=> Edit Account</h2>
 @helper.form(action = user.routes.UserController.processEditUser(), '_id -> "signin_form") {
     @CSRF.formField
+    @if(editUserForm.hasGlobalErrors){
+        <span class="error" style="color: red">@{editUserForm.globalError.get.message}</span>
+    }
     <div class="form-row">
         <div class="col-md-2 my-3">
             @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:",  'readonly -> "readonly")

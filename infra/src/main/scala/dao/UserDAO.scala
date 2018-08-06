@@ -31,6 +31,10 @@ class UserDAO {
     sql"select * from users where email = ${email} ".map(rs => UserDTO(rs)).list().apply().isEmpty
   }
 
+  def isEmailNotExistWithoutID(email: String, code: String)(implicit dbsession: DBSession = AutoSession): Boolean = {
+    sql"select * from users where email = ${email} and userId !=${code}".map(rs => UserDTO(rs)).list().apply().isEmpty
+  }
+
   def getById(id: String)(implicit dbsession: DBSession = AutoSession): Try[UserDTO] = Try {
     sql"select * from users where UserId = ${id} ".map(rs => UserDTO(rs)).single().apply()
       .getOrElse(throw new IdNotFoundException("User not found"))
