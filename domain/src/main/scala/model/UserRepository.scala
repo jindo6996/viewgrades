@@ -33,9 +33,10 @@ class UserRepository @Inject() (userDAO: UserDAO) {
     userDAO.getById(id).map(UserDomainService.toEntity).get
   }
 
-  def edit(entity: User): Try[Int] = {
+  def edit(entity: User): Try[Int] = Try {
     if (userDAO.isEmailNotExistWithoutID(entity.email, entity.userId.value)) {
-      userDAO.editUser(UserDomainService.toDataTransferObject(entity))
+      userDAO.editUser(UserDomainService.toDataTransferObject(entity)).get
+
     } else {
       throw EntityDuplicateException("Email Duplicate", entity)
     }
