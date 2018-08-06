@@ -7,6 +7,7 @@ import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject._
 import model.UserRepository
 import model.UserRole.Admin
+import model.UserStatus.Active
 import play.api.mvc._
 import services.AccountService
 /**
@@ -35,8 +36,9 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
       loginInfo <- validateForm(loginForm)
       userInfo <- userRepository.resolveByEmail(loginInfo.email)
       if (AccountService.checkPassword(loginInfo.password, userInfo.password))
+      if (userInfo.userStatus.value == "ACTIVE")
     } yield {
-      if (userInfo.userRole.value == "Admin") {
+      if (userInfo.userRole.value == "ADMIN") {
         Redirect("/users").withSession("email" -> userInfo.email, "role" -> userInfo.userRole.toString)
       } else Redirect("/").withSession("email" -> userInfo.email, "role" -> userInfo.userRole.toString)
     }).recover {

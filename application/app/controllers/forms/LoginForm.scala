@@ -9,7 +9,7 @@ object LoginForm {
 
   val loginForm = Form(
     mapping(
-      "email" -> email,
+      "email" -> email.verifying(),
       "password" -> nonEmptyText
     )(LoginInfo.apply)(LoginInfo.unapply)
   )

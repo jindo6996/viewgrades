@@ -23,4 +23,7 @@ object AccountService {
     else
       randomString
   }
+  //  def sendMail(): Unit = {
+  //    val mailerClient: MailerClient
+  //  }
 }
