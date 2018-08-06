@@ -13,9 +13,8 @@ import play.api.libs.mailer.{ Email, MailerClient }
 import services.AccountService._
 
 @Singleton
-class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents) extends AbstractController(cc)
+class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents, mailerClient: MailerClient) extends AbstractController(cc)
   with play.api.i18n.I18nSupport with controllers.BaseController with Secured {
-  @Inject var mailerClient: MailerClient = null
   def listUser = withAuth { email => implicit request =>
     require(request.session.get("role").get == "Admin")
     Ok(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, editUserForm))
@@ -26,9 +25,9 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     val password = randomString
     (for {
       userInfo <- validateForm(addUserForm)
-      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, password, userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
+      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, password, UserRole.fromString(userInfo.userRole).get, UserStatus.Active, ""))
     } yield {
-      sendEmail(userInfo.email, password)
+      //      sendEmail(userInfo.email, password)
       Redirect("/users")
     }).recover {
       case formErr: FormErrorException[AddUserForm]        => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("Form Error"), editUserForm))
@@ -40,7 +39,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     require(request.session.get("role").get == "Admin")
     (for {
       userInfo <- validateForm(editUserForm)
-      editedUser <- userRepository.edit(User(UserId(userInfo.userIdEdit), userInfo.emailEdit, "123456", userInfo.entryCompanyDateEdit, UserRole.fromString(userInfo.userRoleEdit).get, Department(userInfo.departmentEdit), userInfo.annualLeaveEdit, UserStatus.fromString(userInfo.statusEdit).get, ""))
+      editedUser <- userRepository.edit(User(UserId(userInfo.userIdEdit), userInfo.emailEdit, "123456", UserRole.fromString(userInfo.userRoleEdit).get, UserStatus.fromString(userInfo.statusEdit).get, ""))
     } yield {
       Redirect("/users")
     }).recover {

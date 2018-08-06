@@ -19,7 +19,7 @@ class UserDAO {
 
   def insert(userDTO: UserDTO)(implicit session: DBSession = AutoSession): Try[Int] = Try {
     val password = BCrypt.hashpw(userDTO.password, BCrypt.gensalt())
-    sql"INSERT INTO users (userId, email, password, entryCompanyDate, userRole, department, annualLeave, userStatus) VALUES (${userDTO.userId}, ${userDTO.email}, ${password}, ${userDTO.entryCompanyDate}, ${userDTO.userRole}, ${userDTO.department}, ${userDTO.annualLeave}, ${userDTO.userStatus})"
+    sql"INSERT INTO users (userId, email, password, userRole, userStatus) VALUES (${userDTO.userId}, ${userDTO.email}, ${password}, ${userDTO.userRole},  ${userDTO.userStatus})"
       .update().apply()
   }
 
@@ -41,7 +41,7 @@ class UserDAO {
   }
 
   def editUser(userDTO: UserDTO)(implicit session: DBSession = AutoSession): Try[Int] = Try {
-    sql"UPDATE users SET userId=${userDTO.userId},email=${userDTO.email},entryCompanyDate=${userDTO.entryCompanyDate},userRole=${userDTO.userRole},department=${userDTO.department},annualLeave=${userDTO.annualLeave},userStatus= ${userDTO.userStatus} WHERE userId=${userDTO.userId}".update().apply()
+    sql"UPDATE users SET userId=${userDTO.userId},email=${userDTO.email},userRole=${userDTO.userRole},userStatus= ${userDTO.userStatus} WHERE userId=${userDTO.userId}".update().apply()
   }
 
 }

@@ -75,19 +75,6 @@
         width: 100%;
     }
 }
-#userRole_ADMIN{
-    width: 15%;
-    display: inline-block;
-}
-label[for = 'userRole_ADMIN']{
-    width: 65%;
-}
-dl .error{
-    color: red;
-}
-label[for = 'userRoleEdit_ADMIN']{
-    width: 65%;
-}
 dl .error{
     color: red;
 }
