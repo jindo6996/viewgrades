@@ -10,14 +10,16 @@ lazy val commonSettings = Seq(
     guice,
     jdbc,
     evolutions,
-    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test,
+    "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-M1" % Test,
     "mysql" % "mysql-connector-java" % "5.1.36",
-    "org.scalikejdbc" %% "scalikejdbc"                  % "3.0.1",
-    "org.scalikejdbc" %% "scalikejdbc-config"           % "2.5.1",
-    "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.6.0",
+    "org.scalikejdbc" %% "scalikejdbc"                  % "3.2.2",
+    "org.scalikejdbc" %% "scalikejdbc-config"           % "3.2.2",
+    "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.6.0-scalikejdbc-3.2",
     "ch.qos.logback"  %  "logback-classic"   % "1.2.3",
     specs2 % Test,
-    "org.mindrot" % "jbcrypt" % "0.3m"
+    "org.mindrot" % "jbcrypt" % "0.3m",
+    "com.typesafe.play" %% "play-mailer" % "6.0.1",
+    "com.typesafe.play" %% "play-mailer-guice" % "6.0.1"
   )
 )
 
@@ -62,3 +64,4 @@ scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignSingleLineCaseStatements, true)
   .setPreference(DoubleIndentConstructorArguments, true)
   .setPreference(DanglingCloseParenthesis, Preserve)
+libraryDependencies += "com.typesafe.play" %% "cachecontrol" % "1.1.1"

@@ -1,0 +1,46 @@
+@import helper._
+@(addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+
+<div class="row">
+    <div class="col-md-12 border">
+        <h2> Create Account</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 border">
+        @helper.form(action = user.routes.UserController.processAddUser(), '_id -> "signin_form") {
+            @CSRF.formField
+            @if(addUserForm.hasGlobalErrors){
+                <span class="error" style="color: red">@{addUserForm.globalError.get.message}</span>
+            }
+            <div class="form-row">
+
+                <div class="col-md-2 my-3">
+                    @helper.inputText(addUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:",'maxlength ->"20")
+                </div>
+                <div class="col-md-6 my-3">
+                    @helper.inputText(addUserForm("email"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:",'maxlength ->"100")
+                </div>
+                <div class="col-md-4 my-3">
+                    @helper.inputDate(addUserForm("entryCompanyDate"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-2 my-3">
+                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
+                </div>
+                <div class="col-md-3 my-3">
+                    @helper.select(addUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
+                </div>
+                <div class="col-md-3 my-3">
+                    @helper.inputText(addUserForm("annualLeave").copy(value = Option("12")),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", 'maxlength ->"5")
+                </div>
+
+            </div>
+            <div class="col-md-12 my-3">
+                <button type="submit" class="btn bg-gradient2">Create</button>
+                <button type="button" onclick="document.getElementById('create_user').style.display='none'" class="btn btn-info">Cancel</button>
+            </div>
+        }
+    </div>
+</div>

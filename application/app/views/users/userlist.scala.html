@@ -1,0 +1,132 @@
+
+@import controllers.forms.EditUserForm
+@(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@main("Septeni Timesheet Managament") {
+    <div class="row">
+        <div class="col-md-4 my-1">
+            <h2>Account Mangament</h2>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-2">
+            <button onclick="document.getElementById('create_user').style.display='block'" class="btn bg-gradient2 m-2">Create account</button>
+        </div>
+        <div class="col-md-3 table-sort-search-container">
+            <input class="form-control my-2" id="myInputTextField" type="search" placeholder="Search" aria-controls="example">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered text-nowrap" id="example">
+                <thead>
+                    <tr>
+                        <th>Staff code</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Annual Leave</th>
+                        <th>Entry Company Date</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Last modified</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(user <- users) {
+                    <tr>
+                        <td>@user.userId.value</td>
+                        <td>@user.email</td>
+                        <td>@user.department.name</td>
+                        <td>@user.annualLeave</td>
+                        <td>@user.entryCompanyDate.substring(0,10)</td>
+                        <td>@user.userRole</td>
+                        <td>@user.userStatus</td>
+                        <td>@user.lastModified</td>
+                        <td>
+                            <a href="#" onclick="document.getElementById('edit_user').style.display='block'" class="editUser">Edit</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-row">
+            <div class="pagination">
+
+            </div>
+            <div class="page-item">
+                <select name="department" class="btn dropdown-toggle btn-light mx-1" id='length_change'>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    @*Creat user form*@
+    @if(addUserForm.hasGlobalErrors){
+        <div class="modal" id="create_user" style="display: block">
+    }else{
+        <div class="modal" id="create_user">
+    }
+
+        <div class="col-md-5 border modal-content animate">
+            @createUser(addUserForm)
+        </div>
+    </div>
+    @*edit form*@
+    @if(editUserForm.hasGlobalErrors){
+        <div class="modal" id="edit_user" style="display: block">
+        }else{
+        <div class="modal" id="edit_user">
+        }
+        <div class="col-md-5 border modal-content animate">
+            @editUser(editUserForm)
+        </div>
+    </div>
+
+    <script type="text/javascript">
+            var table = $('#example').DataTable({
+                
+                "initComplete": function( settings, json ) {
+                    $(".pagination").append($(".dataTables_paginate"));
+
+                },
+                "fnHeaderCallback": function(){
+                    $('.dataTables_filter').hide();
+                    $('.dataTables_length').hide();
+
+                },
+                language: {
+                    paginate: {
+                        next: '>>',
+                        previous: '<<'
+                    }
+                },
+                "drawCallback": function( settings ) {
+
+                    $(".paginate_button").addClass('btn btn-outline-secondary');
+                    $(".current").css("background","#4f90fc")
+                },
+                "order": [[ 7, "desc" ]]
+            });
+
+
+
+            // #myInput is a <input type="text"> element
+            $('#myInputTextField').on( 'keyup', function () {
+                table.search( this.value ).draw();
+            } );
+
+            $('#length_change').val(table.page.len());
+            $('#length_change').change( function() {
+                table.page.len( $(this).val() ).draw();
+            });
+
+    </script>
+
+
+}
