@@ -12,7 +12,7 @@
             @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:",  'readonly -> "readonly")
         </div>
         <div class="col-md-6 my-3">
-            @helper.inputText(editUserForm("emailEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:")
+            @helper.inputText(editUserForm("emailEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:",'maxlength ->"100")
         </div>
         <div class="col-md-4 my-3">
             @helper.inputDate(editUserForm("entryCompanyDateEdit"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
@@ -26,7 +26,7 @@
             @helper.select(editUserForm("departmentEdit"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
         </div>
         <div class="col-md-3 my-3">
-            @helper.inputText(editUserForm("annualLeaveEdit"),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", '_value -> 12)
+            @helper.inputText(editUserForm("annualLeaveEdit"),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:",'maxlength ->"5")
         </div>
         <div class="col-md-4 my-3">
             @helper.inputRadioGroup(editUserForm("statusEdit"), Seq("ACTIVE"->"Active","INACTIVE"->"Inactive"), '_label -> "Status:", '_showConstraints -> false,'style->"display:inline-block")
