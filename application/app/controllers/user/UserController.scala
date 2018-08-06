@@ -26,9 +26,9 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     val password = randomString
     (for {
       userInfo <- validateForm(addUserForm)
-      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, "123123", userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
+      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, password, userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
     } yield {
-      //      sendEmail(userInfo.email, password)
+      sendEmail(userInfo.email, password)
       Redirect("/users")
     }).recover {
       case formErr: FormErrorException[AddUserForm]        => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("Form Error"), editUserForm))
@@ -52,9 +52,9 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     val mailSend = toMail.split("@")
     val email = Email(
       "Password of Timesheet",
-      "septenitimesheetmanager@gmail.com",
+      "<septenitimesheetmanager@gmail.com>",
       Seq(s"<$toMail>"),
-      bodyText = Some(s"Dear $mailSend \nThis your passwork for website timesheet manager:$pass\nThank you and best regards,\nManager")
+      bodyText = Some(s"Dear $mailSend \nThis your passwork for website timesheet manager:$pass\nThank you and best regards,\nManager".stripMargin)
     )
     mailerClient.send(email)
   }
