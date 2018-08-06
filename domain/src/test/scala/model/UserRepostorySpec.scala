@@ -5,7 +5,7 @@ import dto.UserDTO
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 class UserRepostorySpec extends Specification with Mockito {
 

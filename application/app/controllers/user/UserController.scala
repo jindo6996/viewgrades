@@ -13,9 +13,9 @@ import play.api.libs.mailer.{ Email, MailerClient }
 import services.AccountService._
 
 @Singleton
-class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents, mailerClient: MailerClient) extends AbstractController(cc)
+class UserController @Inject() (userRepository: UserRepository, cc: ControllerComponents) extends AbstractController(cc)
   with play.api.i18n.I18nSupport with controllers.BaseController with Secured {
-
+  @Inject var mailerClient: MailerClient = null
   def listUser = withAuth { email => implicit request =>
     require(request.session.get("role").get == "Admin")
     Ok(views.html.users.userlist(userRepository.resolveAll.get, addUserForm, editUserForm))
@@ -26,7 +26,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     val password = randomString
     (for {
       userInfo <- validateForm(addUserForm)
-      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, password, userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
+      //      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, password, userInfo.entryCompanyDate, UserRole.fromString(userInfo.userRole).get, Department(userInfo.department), userInfo.annualLeave, UserStatus.Active, ""))
     } yield {
       sendEmail(userInfo.email, password)
       Redirect("/users")
@@ -49,7 +49,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     }.get
   }
   private def sendEmail(toMail: String, pass: String) = {
-    val mailSend = toMail.split("@")
+    val mailSend = toMail.split("@")(0)
     val email = Email(
       "Password of Timesheet",
       "<septenitimesheetmanager@gmail.com>",
