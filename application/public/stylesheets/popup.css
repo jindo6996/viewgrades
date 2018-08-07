@@ -30,7 +30,10 @@
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 40%;
+    position: absolute;
+    left: 30%;
+    padding: 0 15px 20px 15px;
 }
 
 /* The Close Button (x) */
@@ -75,19 +78,31 @@
         width: 100%;
     }
 }
-#userRole_ADMIN{
-    width: 15%;
+dl .error{
+    color: red;
+}
+#createUser, #myInputTextField {
+
+    margin-top: 15px;
+}
+#createUser{
+    background: #286090;
+    color:#FFFFFF;
+}
+.btn-info{
+    background-color: #333;
+}
+.bg-gradient2{
+    background-color: #337ab7;
+    color: #FFFFFF;
+}
+#length_change{
+    width: 47px;
+    padding: 6px 0;
+}
+.page-item, #example_paginate{
     display: inline-block;
 }
-label[for = 'userRole_ADMIN']{
-    width: 65%;
-}
-dl .error{
-    color: red;
-}
-label[for = 'userRoleEdit_ADMIN']{
-    width: 65%;
-}
-dl .error{
-    color: red;
+#example, #example th{
+    text-align: center;
 }

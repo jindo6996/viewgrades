@@ -1,5 +1,5 @@
-@import helper._
 @(addUserForm: Form[forms.AddUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@import helper._
 
 <div class="row">
     <div class="col-md-12 border">
@@ -15,25 +15,16 @@
             }
             <div class="form-row">
 
-                <div class="col-md-2 my-3">
+                <div class="col-md-4 my-3">
                     @helper.inputText(addUserForm("userId"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:",'maxlength ->"20")
                 </div>
-                <div class="col-md-6 my-3">
+                <div class="col-md-8 my-3">
                     @helper.inputText(addUserForm("email"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:",'maxlength ->"100")
-                </div>
-                <div class="col-md-4 my-3">
-                    @helper.inputDate(addUserForm("entryCompanyDate"),'class ->"form-control", 'type -> "date", '_showConstraints -> false, '_label -> "Entry Company Date")
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-md-2 my-3">
-                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
-                </div>
-                <div class="col-md-3 my-3">
-                    @helper.select(addUserForm("department"),Seq("Back Office"->"Back Office","Sacdev"->"Sacdev","Mocua"->"Mocua","Precog"->"Precog","Other"->"Other"),'class ->"btn dropdown-toggle btn-light", '_showConstraints -> false, '_label -> "Department:")
-                </div>
-                <div class="col-md-3 my-3">
-                    @helper.inputText(addUserForm("annualLeave").copy(value = Option("12")),'class ->"form-control", 'type -> "text", '_showConstraints -> false, '_label -> "Annual leave:", 'maxlength ->"5")
+                <div class="col-md-4 my-3">
+                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STUDENT")), Seq("ADMIN"->"Admin","STUDENT"->"Student"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
                 </div>
 
             </div>

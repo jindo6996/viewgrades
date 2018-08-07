@@ -4,7 +4,7 @@ version := "1.0"
       
 lazy val `appstart` = (project in file(".")).enablePlugins(PlayScala)
 
-lazy val commonSettings = Seq(
+lazy val commonSettings = Seq(libraryDependencies += "com.typesafe.play" %% "play-mailer" % "6.0.1",
   scalaVersion := "2.12.2",
   libraryDependencies ++= Seq(
     guice,

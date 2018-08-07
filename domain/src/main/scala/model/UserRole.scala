@@ -10,13 +10,13 @@ object UserRole {
 
   case object Admin extends UserRole("ADMIN")
 
-  case object Staff extends UserRole("STAFF")
+  case object Student extends UserRole("STUDENT")
 
   def fromString(value: String): Try[UserRole] = Try {
     value match {
-      case "ADMIN" => UserRole.Admin
-      case "STAFF" => UserRole.Staff
-      case _       => throw new ValueNotFoundException("warn.userRoleWrongFormat")
+      case "ADMIN"   => UserRole.Admin
+      case "STUDENT" => UserRole.Student
+      case _         => throw new ValueNotFoundException("warn.userRoleWrongFormat")
     }
   }
 }
