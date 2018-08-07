@@ -30,9 +30,9 @@
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 50%;
+    width: 40%;
     position: absolute;
-    left: 25%;
+    left: 30%;
     padding: 0 15px 20px 15px;
 }
 
@@ -80,4 +80,29 @@
 }
 dl .error{
     color: red;
+}
+#createUser, #myInputTextField {
+
+    margin-top: 15px;
+}
+#createUser{
+    background: #286090;
+    color:#FFFFFF;
+}
+.btn-info{
+    background-color: #333;
+}
+.bg-gradient2{
+    background-color: #337ab7;
+    color: #FFFFFF;
+}
+#length_change{
+    width: 47px;
+    padding: 6px 0;
+}
+.page-item, #example_paginate{
+    display: inline-block;
+}
+#example, #example th{
+    text-align: center;
 }

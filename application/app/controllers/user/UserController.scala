@@ -25,7 +25,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
     val password = randomString
     (for {
       userInfo <- validateForm(addUserForm)
-      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, password, UserRole.fromString(userInfo.userRole).get, UserStatus.Active, ""))
+      addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, "123123", UserRole.fromString(userInfo.userRole).get, UserStatus.Active, ""))
     } yield {
       //      sendEmail(userInfo.email, password)
       Redirect("/users")

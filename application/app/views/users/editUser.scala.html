@@ -17,7 +17,7 @@
     </div>
     <div class="form-row">
         <div class="col-md-4 my-3">
-            @helper.inputRadioGroup(editUserForm("userRoleEdit"), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
+            @helper.inputRadioGroup(editUserForm("userRoleEdit"), Seq("ADMIN"->"Admin","STUDENT"->"Student"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
         </div>
         <div class="col-md-4 my-3">
             @helper.inputRadioGroup(editUserForm("statusEdit"), Seq("ACTIVE"->"Active","INACTIVE"->"Inactive"), '_label -> "Status:", '_showConstraints -> false,'style->"display:inline-block")

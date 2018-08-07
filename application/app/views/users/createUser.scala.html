@@ -24,7 +24,7 @@
             </div>
             <div class="form-row">
                 <div class="col-md-4 my-3">
-                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STAFF")), Seq("ADMIN"->"Admin","STAFF"->"Staff"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
+                    @helper.inputRadioGroup(addUserForm("userRole").copy(value = Option("STUDENT")), Seq("ADMIN"->"Admin","STUDENT"->"Student"), '_label -> "Role:", '_showConstraints -> false,'style->"display:inline-block")
                 </div>
 
             </div>
