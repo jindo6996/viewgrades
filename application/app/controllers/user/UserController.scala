@@ -50,8 +50,8 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
   private def sendEmail(toMail: String, pass: String) = {
     val mailSend = toMail.split("@")(0)
     val email = Email(
-      "Password of Timesheet",
-      "<septenitimesheetmanager@gmail.com>",
+      "Password of Semester Examination System",
+      "<viewgradesvnuedu@gmail.com>",
       Seq(s"<$toMail>"),
       bodyText = Some(s"Dear $mailSend \nThis your passwork for website timesheet manager: $pass\nThank you and best regards,\nManager".stripMargin)
     )
