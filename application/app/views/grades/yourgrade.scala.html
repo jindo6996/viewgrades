@@ -1,18 +1,21 @@
-@()(implicit request: Request[_], flash: Flash, messages: Messages)
+@(grades: List[model.grades.Grade])(implicit request: Request[_], flash: Flash, messages: Messages)
 @main("Semester Examination System") {
     <div class="row" id="form-and-checkbox">
         <div class="col-sm-1"></div>
 
         <div id="dropdownChooseYear" class="col-sm-2 col-sm-push-3">
-            <small>Năm học: </small><br>
+            <small>Year: </small><br>
             <select class="form-control advance-search-dropdown modifymobile" id="form-choose-year-list-subject"><option value="2">2016-2017</option><option value="1">2017-2018</option></select>
         </div>
 
         <div class="col-sm-1"></div>
 
         <div id="dropdownChooseTerm" class="col-sm-2 col-sm-push-3">
-            <small>Kỳ học: </small><br>
-            <select class="form-control advance-search-dropdown modifymobile" id="form-choose-term-list-subject"><option value="1">Học kỳ 1</option><option value="2">Học kỳ 2</option><option value="47">Kỳ phụ HK I</option><option value="48">Kỳ phụ HK II</option><option value="49">Học kỳ phụ</option><option value="50">Chuẩn đầu ra</option><option value="58">Giáo dục thể chất và thể thao</option></select>
+            <small>Semester: </small><br>
+            <select class="form-control advance-search-dropdown modifymobile" id="form-choose-term-list-subject">
+                <option value="1">Học kỳ 1</option>
+                <option value="2">Học kỳ 2</option>
+            </select>
         </div>
 
         <div class="col-sm-1"></div>
@@ -22,8 +25,8 @@
         </div>
 
         <div class="col-sm-3 col-sm-pull-9" id="searh-advance-box">
-            <small>Lọc danh sách: </small><br>
-            <input maxlength="40" id="inputFilterListSubject" type="text" class="form-control modifymobile" placeholder="Nhập tên hoặc mã">
+            <small>Filter list: </small><br>
+            <input maxlength="40" id="inputFilterListSubject" type="text" class="form-control modifymobile" placeholder="Code or name subject">
         </div>
 
         <div class="col-sm-1"></div>
@@ -42,12 +45,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>INT3306</td>
-                        <td>Phát triển ứng dụng web</td>
-                        <td><a href="@routes.Assets.versioned("file/01.pdf")" target="_blank" rel="noopener noreferrer">test.pdf</a></td>
-                        <td>2018/08/03</td>
-                    </tr>
+                    @for(grade <- grades) {
+                        <tr>
+                            <td>@grade.id</td>
+                            <td>@grade.nameSubject</td>
+                            <td><a href="@routes.Assets.versioned(grade.file)" target="_blank" rel="noopener noreferrer">Click here</a></td>
+                            <td>@grade.upload_at</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
