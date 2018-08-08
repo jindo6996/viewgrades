@@ -35,21 +35,25 @@
     @*table*@
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-bordered text-nowrap" id="example">
+            <table class="table text-nowrap" id="example">
                 <thead>
                     <tr>
                         <th>Subject code</th>
                         <th>Name</th>
                         <th>Grade</th>
+                        <th>Semester</th>
+                        <th>Year</th>
                         <th>Upload at</th>
                     </tr>
                 </thead>
                 <tbody>
                     @for(grade <- grades) {
                         <tr>
-                            <td>@grade.id</td>
+                            <td>@grade.codeSubject</td>
                             <td>@grade.nameSubject</td>
-                            <td><a href="@routes.Assets.versioned(grade.file)" target="_blank" rel="noopener noreferrer">Click here</a></td>
+                            <td><a href="@routes.Assets.versioned("file/"+grade.file)" target="_blank" rel="noopener noreferrer">Click here</a></td>
+                            <td>@grade.semester</td>
+                            <td>@grade.year</td>
                             <td>@grade.upload_at</td>
                         </tr>
                     }

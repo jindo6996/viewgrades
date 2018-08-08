@@ -25,7 +25,7 @@ CREATE TABLE  grades(
   FOREIGN KEY (id_semester) REFERENCES semesters(id)
 );
 
-CREATE TABLE classes(
+CREATE TABLE students_grades(
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   id_user VARCHAR(20),
   id_grade INT,
@@ -35,7 +35,7 @@ CREATE TABLE classes(
 ALTER TABLE grades ADD COLUMN upload_at TIMESTAMP ;
 -- Down
 
-DROP TABLE classes;
+DROP TABLE students_grades;
 DROP TABLE grades;
 DROP TABLE subjects;
 DROP TABLE semesters;

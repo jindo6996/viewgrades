@@ -6,8 +6,7 @@ import controllers.forms.LoginInfo
 import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject._
 import model.UserRepository
-import model.UserRole.Admin
-import model.UserStatus.Active
+import model.grades.GradeRepository
 import play.api.mvc._
 import services.AccountService
 /**
@@ -15,7 +14,7 @@ import services.AccountService
  * application's home page.
  */
 @Singleton
-class AuthController @Inject() (userRepository: UserRepository, cc: ControllerComponents) extends AbstractController(cc) with play.api.i18n.I18nSupport with controllers.BaseController with Secured {
+class AuthController @Inject() (userRepository: UserRepository, cc: ControllerComponents, gradeRepository: GradeRepository) extends AbstractController(cc) with play.api.i18n.I18nSupport with controllers.BaseController with Secured with Authentication {
 
   /**
    * Create an Action to render an HTML page with a login message.
@@ -28,7 +27,7 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
       //      if (request.flash.get("error").isDefined) print(request.flash.get("error").get)
       Ok(views.html.login.login(loginForm))
     } else if (request.session.get("role").get == "Admin") Redirect("/users")
-    else Ok(views.html.users.view())
+    else Ok(views.html.grades.yourgrade(gradeRepository.resolveAllByEmail(getMailInSession.get).get))
   }
 
   def processLogin = Action { implicit request =>
