@@ -12,4 +12,10 @@ window.onclick = function(event) {
         // errorEdit.style.display = "none";
 
     }
+    var modal3 = document.getElementById('create_year');
+    if (event.target == modal3) {
+        modal3.style.display = "none";
+        // errorEdit.style.display = "none";
+
+    }
 };

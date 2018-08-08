@@ -1,0 +1,75 @@
+@(grades: List[model.grades.Grade])(implicit request: Request[_], flash: Flash, messages: Messages)
+@main("Semester Examination System") {
+    <div class="row" id="form-and-checkbox">
+            <div class="col-md-8 my-1">
+                <h2>Your grades</h2>
+                    <label>Filter list: </label><br>
+                    <input maxlength="50" id="inputFilterListSubject" type="text" class="form-control modifymobile col-md-4" placeholder="Code or name subject">
+            </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table text-nowrap" id="gradesUser">
+                <thead>
+                    <tr>
+                        <th>Subject code</th>
+                        <th>Name</th>
+                        <th>Semester</th>
+                        <th>Year</th>
+                        <th>Grade</th>
+                        <th>Upload at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(grade <- grades) {
+                        <tr>
+                            <td>@grade.codeSubject</td>
+                            <td>@grade.nameSubject</td>
+                            <td>@grade.semester</td>
+                            <td>@grade.year</td>
+                            <td><a href="@routes.Assets.versioned("file/"+grade.file)" target="_blank" rel="noopener noreferrer">View</a></td>
+                            <td>@grade.upload_at</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-row">
+            <div class="pagination">
+
+            </div>
+            <div class="page-item">
+                <select name="department" class="btn dropdown-toggle btn-light mx-1" id='length_changegradeUser'>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/sortsearch.js")" type="text/javascript"></script>
+}

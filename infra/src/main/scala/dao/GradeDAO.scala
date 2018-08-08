@@ -14,4 +14,13 @@ class GradeDAO {
           INNER JOIN years Y ON Y.id = G.id_year
           WHERE SG.id_user=${id}""".map(rs => GradeDTO(rs)).list().apply()
   }
+  def getAll()(implicit dbsession: DBSession = AutoSession): Try[List[GradeDTO]] = Try {
+    sql"""SELECT * FROM grades G
+          INNER JOIN subjects S ON S.code = G.code_sub
+          INNER JOIN semesters ST ON ST.id = G.id_semester
+          INNER JOIN years Y ON Y.id = G.id_year""".map(rs => GradeDTO(rs)).list().apply()
+  }
+  def insertYear(year: String)(implicit session: DBSession = AutoSession): Try[Long] = Try {
+    sql"INSERT INTO years(year) VALUES (${year})".updateAndReturnGeneratedKey().apply()
+  }
 }

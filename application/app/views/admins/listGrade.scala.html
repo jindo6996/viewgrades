@@ -1,11 +1,11 @@
-@(grades: List[model.grades.Grade])(implicit request: Request[_], flash: Flash, messages: Messages)
-@main("Semester Examination System") {
+@(grades: List[model.grades.Grade], yearForm: Form[forms.YearForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@adminView {
     <div class="row" id="form-and-checkbox">
-            <div class="col-md-8 my-1">
-                <h2>Your grades</h2>
-                    <label>Filter list: </label><br>
-                    <input maxlength="50" id="inputFilterListSubject" type="text" class="form-control modifymobile col-md-4" placeholder="Code or name subject">
-            </div>
+        <div class="col-md-8 my-1">
+            <h2>Your grades</h2>
+            <label>Filter list: </label><br>
+            <input maxlength="50" id="inputFilterListSubject" type="text" class="form-control modifymobile col-md-4" placeholder="Code or name subject">
+        </div>
     </div>
 
     <div class="row">
@@ -15,25 +15,32 @@
                     <tr>
                         <th>Subject code</th>
                         <th>Name</th>
-                        <th>Grade</th>
                         <th>Semester</th>
                         <th>Year</th>
+                        <th>Grade</th>
                         <th>Upload at</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for(grade <- grades) {
-                        <tr>
-                            <td>@grade.codeSubject</td>
-                            <td>@grade.nameSubject</td>
-                            <td><a href="@routes.Assets.versioned("file/"+grade.file)" target="_blank" rel="noopener noreferrer">View</a></td>
-                            <td>@grade.semester</td>
-                            <td>@grade.year</td>
-                            <td>@grade.upload_at</td>
-                        </tr>
-                    }
+                @for(grade <- grades) {
+                    <tr>
+                        <td>@grade.codeSubject</td>
+                        <td>@grade.nameSubject</td>
+                        <td>@grade.semester</td>
+                        <td>@grade.year</td>
+                        <td><a href="@routes.Assets.versioned("file/"+grade.file)" target="_blank" rel="noopener noreferrer">View</a></td>
+                        <td>@grade.upload_at</td>
+                        <td>
+                            <a href="#" onclick="document.getElementById('edit_user').style.display='block'" class="editUser">Edit</a>
+                        </td>
+                    </tr>
+                }
                 </tbody>
                 <tfoot>
+                    <th>
+
+                    </th>
                     <th>
 
                     </th>
@@ -71,5 +78,15 @@
             </div>
         </div>
     </div>
+    @if(yearForm.hasGlobalErrors){
+        <div class="modal" id="create_year" style="display: block">
+        }else{
+        <div class="modal" id="create_year">
+        }
+
+    <div class="col-md-5 border modal-content animate">
+    @createYear(yearForm)
+    </div>
+</div>
     <script src="@routes.Assets.versioned("javascripts/sortsearch.js")" type="text/javascript"></script>
 }

@@ -119,7 +119,7 @@ dl .error{
 }
 tfoot select{
     margin: auto!important;
-    width: 70% !important;
+    /*width: 70% !important;*/
 }
 #inputFilterListSubject{
     width: 30%;

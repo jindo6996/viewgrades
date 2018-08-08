@@ -11,5 +11,12 @@ class GradeRepository @Inject() (gradeDao: GradeDAO, userDAO: UserDAO) {
     val id = userDAO.getByEmail(email).get.userId
     gradeDao.getAllByID(id).map(_.map(GradeDomainService.toEntity)).get
   }
+  def resolveAll(): Try[List[Grade]] = Try {
+    gradeDao.getAll().map(_.map(GradeDomainService.toEntity)).get
+  }
+
+  def storeYear(entity: String): Try[Long] = Try {
+    gradeDao.insertYear(entity).get
+  }
 
 }

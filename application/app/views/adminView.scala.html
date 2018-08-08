@@ -1,0 +1,139 @@
+@(content:Html)(implicit request: Request[_], flash: Flash)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @* Here's where we render the page title `String`. *@
+        <title>Semester Examination System</title>
+        @*<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/MyCss.css")">*@
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+        @*<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/MyCss.css")">*@
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/popup.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/w3.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/font-awesome.min.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <script src="@routes.Assets.versioned("javascripts/jquery.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/jquery-3.3.1.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/jquery.dataTables.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/popup.js")" type="text/javascript"></script>
+
+    </head>
+    <body >
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" style="margin-left: 80px">View grades</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    @if(request.session.get("role").get == "Admin") {
+                        <li><a href="/admin">Admin</a></li>
+                    }
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Grades <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/yourgrade">Your Grades</a></li>
+                            <li><a href="/grades">All grades</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout" style="margin-right: 50px">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:160px;">
+            <a href="/admin/grades" class="w3-bar-item w3-button">Grades</a>
+            <div class="w3-dropdown-click">
+                <button class="w3-button" onclick="myDropFunc()">
+                    Import
+                </button>
+                <div id="demoDrop" class="w3-dropdown-content w3-bar-block w3-white w3-card">
+                    <a href="#" class="w3-bar-item w3-button">File grade</a>
+                    <a href="#" onclick="document.getElementById('create_year').style.display='block'" class="editYear w3-bar-item w3-button">Year</a>
+                    <a href="#" class="w3-bar-item w3-button">Semester</a>
+                    <a href="#" class="w3-bar-item w3-button">Subject</a>
+                </div>
+            </div>
+            <a href="/users" class="w3-bar-item w3-button">Account</a>
+        </div>
+        <div class="container">
+            @content
+            <div class="modal" id="create_year" style="display: none;">
+
+
+                <div class="col-md-5 border modal-content animate">
+
+
+                    <div class="row">
+                        <div class="col-md-12 border">
+                            <h2> Create Year</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 border">
+
+                            <form action="/admin/years" method="POST" _id="year_form">
+
+                                <input type="hidden" name="csrfToken" value="9a6ead0b2bc9ccbfd35fd21cdcd066476a3ead12-1533759733697-3386f7e6ffd2942fb55666c5">
+
+                                <div class="form-row">
+
+                                    <div class="col-md-4 my-3">
+
+
+                                        <dl class=" " id="userId_field">
+
+                                            <dt><label for="userId">Year:</label></dt>
+
+                                            <dd>
+                                                <input type="text" id="userId" name="userId" value="" class="form-control" placeholder="xxxx-yyyy" maxlength="9" minlength="9">
+                                            </dd>
+
+
+                                        </dl>
+
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-3">
+                                    <button type="submit" class="btn bg-gradient2">Create</button>
+                                    <button type="button" onclick="document.getElementById('create_year').style.display='none'" class="btn btn-info">Cancel</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+    <script>
+            function myAccFunc() {
+                var x = document.getElementById("demoAcc");
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                    x.previousElementSibling.className += " w3-green";
+                } else {
+                    x.className = x.className.replace(" w3-show", "");
+                    x.previousElementSibling.className =
+                            x.previousElementSibling.className.replace(" w3-green", "");
+                }
+            }
+
+            function myDropFunc() {
+                var x = document.getElementById("demoDrop");
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                    x.previousElementSibling.className += " w3-green";
+                } else {
+                    x.className = x.className.replace(" w3-show", "");
+                    x.previousElementSibling.className =
+                            x.previousElementSibling.className.replace(" w3-green", "");
+                }
+            }
+    </script>
+</html>

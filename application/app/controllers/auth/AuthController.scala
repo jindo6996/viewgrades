@@ -3,6 +3,7 @@ package controllers.auth
 import controllers.exceptions.FormErrorException
 import controllers.forms.LoginForm.loginForm
 import controllers.forms.LoginInfo
+import controllers.forms.YearForm.yearForm
 import exceptions.{ EmailNotFoundException, IdNotFoundException }
 import javax.inject._
 import model.UserRepository
@@ -27,7 +28,7 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
       //      if (request.flash.get("error").isDefined) print(request.flash.get("error").get)
       Ok(views.html.login.login(loginForm))
     } else if (request.session.get("role").get == "Admin") Redirect("/users")
-    else Ok(views.html.grades.yourgrade(gradeRepository.resolveAllByEmail(getMailInSession.get).get))
+    else Ok(views.html.grades.listGrade(gradeRepository.resolveAllByEmail(getMailInSession.get).get))
   }
 
   def processLogin = Action { implicit request =>
@@ -47,7 +48,10 @@ class AuthController @Inject() (userRepository: UserRepository, cc: ControllerCo
       case e: NoSuchElementException              => Redirect("/").flashing(Flash(loginForm.bindFromRequest().data) + ("error" -> "User not found"))
     }.get
   }
-
+  def goToAdminPage = withAuth { email => implicit request =>
+    require(request.session.get("role").get == "Admin")
+    Ok(views.html.admins.listGrade(gradeRepository.resolveAllByEmail(getMailInSession.get).get, yearForm))
+  }
   def logout = withAuth { email => implicit request =>
     Redirect(routes.AuthController.loginView).withNewSession
   }

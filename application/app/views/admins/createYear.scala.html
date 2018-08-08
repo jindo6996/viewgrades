@@ -1,0 +1,28 @@
+@(yearForm: Form[forms.YearForm])(implicit request: Request[_], flash: Flash, messages: Messages)
+@import helper._
+
+<div class="row">
+    <div class="col-md-12 border">
+        <h2> Create Year</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 border">
+        @helper.form(action = admin.routes.AdminController.processAddYear(), '_id -> "year_form") {
+        @CSRF.formField
+        @if(yearForm.hasGlobalErrors){
+        <span class="error" style="color: red">@{yearForm.globalError.get.message}</span>
+        }
+        <div class="form-row">
+
+            <div class="col-md-4 my-3">
+                @helper.inputText(yearForm("year"),'class ->"form-control", 'type -> "text", 'placeholder -> "xxxx-yyyy", '_showConstraints -> false, '_label -> "Year:",'maxlength ->"9",'minlength -> "9")
+            </div>
+        </div>
+        <div class="col-md-12 my-3">
+            <button type="submit" class="btn bg-gradient2">Create</button>
+            <button type="button" onclick="document.getElementById('create_year').style.display='none'" class="btn btn-info">Cancel</button>
+        </div>
+        }
+    </div>
+</div>

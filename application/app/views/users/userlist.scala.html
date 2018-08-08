@@ -1,5 +1,5 @@
 @(users: List[model.User], addUserForm: Form[forms.AddUserForm], editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
-@main("Semester Examination System") {
+@adminView {
     <div class="row">
         <div class="col-md-4 my-1">
             <h2>Account Mangament</h2>
@@ -102,7 +102,7 @@
                     $(".paginate_button").addClass('btn btn-outline-secondary');
                     $(".current").css("background","#9e9e9e26")
                 },
-                "order": [[ 5, "desc" ]]
+                "order": [[ 4, "desc" ]]
             });
 
 

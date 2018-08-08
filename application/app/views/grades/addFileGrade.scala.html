@@ -1,0 +1,12 @@
+@import helper._
+@()(implicit request: Request[_], flash: Flash, messages: Messages)
+
+<div class="row">
+    <div class="col-md-12 border">
+        <h2>Edit Account</h2>
+    </div>
+</div>
+@helper.form(action = user.routes.UserController.processEditUser(), '_id -> "signin_form") {
+    @CSRF.formField
+
+}

@@ -3,9 +3,9 @@ $(document).ready(function() {
 
         initComplete: function () {
             $(".pagination").append($(".dataTables_paginate"));
-            this.api().columns([0,1,3,4]).every(function () {
+            this.api().columns([0,1,2,3]).every(function () {
                 var column = this;
-                var select = $('<select><option value="">Select</option></select>')
+                var select = $('<select class="form-control advance-search-dropdown modifymobile" style="width: 120px"><option value="" >Select</option></select>')
                     .appendTo($(column.footer()))
                     .on('change', function () {
                         var val = $.fn.dataTable.util.escapeRegex(
