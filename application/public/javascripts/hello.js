@@ -30,3 +30,4 @@ $('#example').on("click",".editUser",function() {
         $(status).prop("checked", true);
     }
 );
+

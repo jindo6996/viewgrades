@@ -1,7 +1,11 @@
 @import helper._
 @(editUserForm: Form[forms.EditUserForm])(implicit request: Request[_], flash: Flash, messages: Messages)
 
-<h2 class=> Edit Account</h2>
+<div class="row">
+    <div class="col-md-12 border">
+        <h2>Edit Account</h2>
+    </div>
+</div>
 @helper.form(action = user.routes.UserController.processEditUser(), '_id -> "signin_form") {
     @CSRF.formField
     @if(editUserForm.hasGlobalErrors){
@@ -9,7 +13,7 @@
     }
     <div class="form-row">
         <div class="col-md-4 my-3">
-            @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Staff code:",  'readonly -> "readonly")
+            @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Student code:",  'readonly -> "readonly")
         </div>
         <div class="col-md-8 my-3">
             @helper.inputText(editUserForm("emailEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Email", '_showConstraints -> false, '_label -> "Email address:",'maxlength ->"100")

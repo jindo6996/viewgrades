@@ -102,12 +102,10 @@
                     $(".paginate_button").addClass('btn btn-outline-secondary');
                     $(".current").css("background","#9e9e9e26")
                 },
-                "order": [[ 4, "desc" ]]
+                "order": [[ 5, "desc" ]]
             });
 
 
-            //
-            // #myInput is a <input type="text"> element
             $('#myInputTextField').on( 'keyup', function () {
                 table.search( this.value ).draw();
             } );
@@ -118,6 +116,5 @@
             });
 
     </script>
-
 
 }

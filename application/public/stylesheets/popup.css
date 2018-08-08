@@ -1,3 +1,7 @@
+.navbar{
+    margin: 0!important;
+
+}
 /* Set a style for all buttons */
  #create_user{
     overflow: hidden!important;
@@ -103,9 +107,20 @@ dl .error{
 .page-item, #example_paginate{
     display: inline-block;
 }
-#example, #example th{
+#example, #example th, #gradesUser, #gradesUser th{
     text-align: center;
 }
 .row{
     margin-bottom: 15px;
+}
+.form-row{
+    margin-top: -25px;
+    margin-left: -13px;
+}
+tfoot select{
+    margin: auto!important;
+    width: 70% !important;
+}
+#inputFilterListSubject{
+    width: 30%;
 }
