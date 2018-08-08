@@ -1,3 +1,3 @@
 package model.grades
 
-case class Year(year: String)
+case class Year(id:Long, year: String)
