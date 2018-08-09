@@ -2,7 +2,7 @@
 @adminView {
     <div class="row" id="form-and-checkbox">
         <div class="col-md-8 my-1">
-            <h2>Your grades</h2>
+            <h2>Grades</h2>
             <label>Filter list: </label><br>
             <input maxlength="50" id="inputFilterListSubject" type="text" class="form-control modifymobile col-md-4" placeholder="Code or name subject">
         </div>
@@ -32,7 +32,7 @@
                         <td><a href="@routes.Assets.versioned("file/"+grade.file)" target="_blank" rel="noopener noreferrer">View</a></td>
                         <td>@grade.upload_at</td>
                         <td>
-                            <a href="#" onclick="document.getElementById('edit_user').style.display='block'" class="editUser">Edit</a>
+                            <a href="/del/@grade.id" onclick="document.getElementById('edit_user').style.display='block'" class="editUser">Del</a>
                         </td>
                     </tr>
                 }

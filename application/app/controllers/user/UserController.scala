@@ -27,7 +27,7 @@ class UserController @Inject() (userRepository: UserRepository, cc: ControllerCo
       userInfo <- validateForm(addUserForm)
       addToDB <- userRepository.store(User(UserId(userInfo.userId), userInfo.email, "123123", UserRole.fromString(userInfo.userRole).get, UserStatus.Active, ""))
     } yield {
-      //      sendEmail(userInfo.email, password)
+      sendEmail(userInfo.email, password)
       Redirect("/users")
     }).recover {
       case formErr: FormErrorException[AddUserForm]        => BadRequest(views.html.users.userlist(userRepository.resolveAll.get, formErr.formError.withGlobalError("Form Error"), editUserForm))

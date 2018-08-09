@@ -19,4 +19,18 @@ class GradeRepository @Inject() (gradeDao: GradeDAO, userDAO: UserDAO) {
     gradeDao.insertYear(entity).get
   }
 
+  def getSubject: Try[List[Subject]] = Try {
+    gradeDao.getSubject().map(_.map(GradeDomainService.toSubject)).get
+  }
+
+  def getYear: Try[List[Year]] = Try {
+    gradeDao.getYear().map(_.map(GradeDomainService.toYear)).get
+  }
+
+  def getSemester: Try[List[Semester]] = Try {
+    gradeDao.getSemester().map(_.map(GradeDomainService.toSemester)).get
+  }
+  def storeGrade(file: String, sub: String, year: Long, semester: Long): Try[Long] = Try {
+    gradeDao.insertGrade(file, sub, year, semester).get
+  }
 }

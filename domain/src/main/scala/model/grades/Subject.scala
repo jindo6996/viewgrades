@@ -1,3 +1,3 @@
 package model.grades
 
-case class Subject(code:String, name:String)
+case class Subject(code: String, name: String)

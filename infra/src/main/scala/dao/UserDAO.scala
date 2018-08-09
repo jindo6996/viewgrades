@@ -43,5 +43,9 @@ class UserDAO {
   def editUser(userDTO: UserDTO)(implicit session: DBSession = AutoSession): Try[Int] = Try {
     sql"UPDATE users SET userId=${userDTO.userId},email=${userDTO.email},userRole=${userDTO.userRole},userStatus= ${userDTO.userStatus} WHERE userId=${userDTO.userId}".update().apply()
   }
+  def delete(id: Int)(implicit session: DBSession = AutoSession): Try[Int] = Try {
+    sql"DELETE FROM grades WHERE id=${id}".update().apply()
+    1
+  }
 
 }

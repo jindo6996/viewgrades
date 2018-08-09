@@ -34,3 +34,9 @@ GET     /admin                          controllers.auth.AuthController.goToAdmi
 GET     /admin/grades                   controllers.grade.GradeController.gradeAdmin
 
 POST    /admin/years                    controllers.admin.AdminController.processAddYear
+
+GET    /admin/upload                    controllers.grade.GradeController.uploadView
+
+POST    /admin/upload                   controllers.grade.GradeController.upload
+
+GET     /del/:id                        controllers.grade.GradeController.delete(id:Int)

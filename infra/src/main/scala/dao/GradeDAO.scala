@@ -1,6 +1,6 @@
 package dao
 
-import dto.GradeDTO
+import dto.{ GradeDTO, SemesterDTO, SubjectDTO, YearDTO }
 import scalikejdbc._
 
 import scala.util.Try
@@ -22,5 +22,18 @@ class GradeDAO {
   }
   def insertYear(year: String)(implicit session: DBSession = AutoSession): Try[Long] = Try {
     sql"INSERT INTO years(year) VALUES (${year})".updateAndReturnGeneratedKey().apply()
+  }
+  def getSubject()(implicit dbsession: DBSession = AutoSession): Try[List[SubjectDTO]] = Try {
+    sql"""SELECT * FROM subjects """.map(rs => SubjectDTO(rs)).list().apply()
+  }
+  def getYear()(implicit dbsession: DBSession = AutoSession): Try[List[YearDTO]] = Try {
+    sql"""SELECT * FROM years ORDER BY id desc """.map(rs => YearDTO(rs)).list().apply()
+  }
+
+  def getSemester()(implicit dbsession: DBSession = AutoSession): Try[List[SemesterDTO]] = Try {
+    sql"""SELECT * FROM semesters """.map(rs => SemesterDTO(rs)).list().apply()
+  }
+  def insertGrade(file: String, code: String, year: Long, sems: Long)(implicit session: DBSession = AutoSession): Try[Long] = Try {
+    sql"INSERT INTO grades (file, code_sub, id_year, id_semester) VALUES (${file}, ${code}, ${year}, ${sems});".updateAndReturnGeneratedKey().apply()
   }
 }
