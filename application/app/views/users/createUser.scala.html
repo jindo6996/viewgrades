@@ -4,15 +4,15 @@
 <div class="row">
     <div class="col-md-12 border">
         <h2> Create Account</h2>
+        @if(addUserForm.hasGlobalErrors){
+            <span class="error" style="color: red">@{addUserForm.globalError.get.message}</span>
+        }
     </div>
 </div>
 <div class="row">
     <div class="col-md-12 border">
         @helper.form(action = user.routes.UserController.processAddUser(), '_id -> "signin_form") {
             @CSRF.formField
-            @if(addUserForm.hasGlobalErrors){
-                <span class="error" style="color: red">@{addUserForm.globalError.get.message}</span>
-            }
             <div class="form-row">
 
                 <div class="col-md-4 my-3">

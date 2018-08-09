@@ -4,13 +4,14 @@
 <div class="row">
     <div class="col-md-12 border">
         <h2>Edit Account</h2>
+        @CSRF.formField
+        @if(editUserForm.hasGlobalErrors){
+            <span class="error" style="color: red;" >@{editUserForm.globalError.get.message}</span>
+        }
     </div>
 </div>
 @helper.form(action = user.routes.UserController.processEditUser(), '_id -> "signin_form") {
     @CSRF.formField
-    @if(editUserForm.hasGlobalErrors){
-        <span class="error" style="color: red">@{editUserForm.globalError.get.message}</span>
-    }
     <div class="form-row">
         <div class="col-md-4 my-3">
             @helper.inputText(editUserForm("userIdEdit"),'class ->"form-control", 'type -> "text", 'placeholder -> "Code", '_showConstraints -> false, '_label -> "Student code:",  'readonly -> "readonly")
